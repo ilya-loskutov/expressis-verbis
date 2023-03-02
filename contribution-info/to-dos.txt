@@ -1,0 +1,14 @@
+To-Dos:
+
+- To make the title reflect url changes.
+
+- To make our app a web application.
+
+- A Not found page.
+
+- Loading the entry component through url: 
+a) to move the loader logic from the entry list component to the entry resolver;
+b) to make the entry resolver to redirect the user to the entry list in the case of 404.
+
+- The new dictionary component: to implement trim() logic for the name 
+(on dictionary creating too).

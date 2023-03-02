@@ -1,0 +1,29 @@
+@use "sass:map";
+
+$media-breakpoints: (
+    first: 35em,
+    second: 38em,
+    third: 47em,
+    fourth: 62em
+);
+
+@mixin setWidthValuesForMainElement() {
+    width: calc(100vw - 2 * var(--medium-indent));
+
+    @media(min-width: map.get($media-breakpoints, 'first')) {
+        width: calc(map.get($media-breakpoints, 'first') - 2 * var(--big-indent));
+    }
+
+    @media(min-width: map.get($media-breakpoints, 'second')) {
+        width: calc(map.get($media-breakpoints, 'second') - 2 * var(--big-indent));
+    }
+
+    @media(min-width: map.get($media-breakpoints, 'third')) {
+        width: calc(map.get($media-breakpoints, 'third') - 2 * var(--big-indent));
+    }
+
+    @media(min-width: map.get($media-breakpoints, 'fourth')) {
+        width: calc(map.get($media-breakpoints, 'fourth') - 3 * var(--big-indent));
+    }
+
+}

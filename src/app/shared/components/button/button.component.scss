@@ -1,0 +1,45 @@
+.button {
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    &_disabled {
+        cursor: auto;
+    }
+
+    &_size_small {
+        padding: 0 var(--small-indent);
+    }
+
+    $button: &;
+
+    @mixin stylizeAppearance($color) {
+        border: 1px solid rgb($color);
+        background-color: rgb(var(--panel-color-rgb));
+        color: rgb($color);
+
+        &:hover:not(#{$button}_disabled) {
+            border: 1px solid rgb(var(--panel-color-rgb));
+            background-color: rgb($color);
+            color: rgb(var(--panel-color-rgb));
+        }
+    }
+
+    &_state {
+        &_default {
+            @include stylizeAppearance(var(--cold-color-rgb));
+        }
+
+        &_success {
+            @include stylizeAppearance(var(--success-color-rgb));
+        }
+
+        &_conspicuous {
+            @include stylizeAppearance(var(--conspicuous-color-rgb));
+        }
+
+        &_error {
+            @include stylizeAppearance(var(--error-color-rgb));
+        }
+    }
+}

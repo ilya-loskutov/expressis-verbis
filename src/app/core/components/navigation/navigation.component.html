@@ -1,0 +1,66 @@
+<div class="navigation" [ngClass]="{'navigation_opened': isMenuOpened}">
+    <h2 class="invisible-text">Navigation Menu</h2>
+
+    <button (click)="isMenuOpened = true" class="navigation__open-menu-button">
+        <fa-icon [icon]="faBars" size="lg"></fa-icon>
+        <span class="navigation__open-menu-button-description invisible-text">Open navigation menu</span>
+    </button>
+
+    <div (click)="isMenuOpened = false" class="navigation__backdrop">
+    </div>
+
+    <nav class="navigation__menu">
+        <div class="navigation__menu-header">
+            <button (click)="isMenuOpened = false" class="navigation__close-menu-button">
+                <fa-icon [icon]="faBars" size="lg"></fa-icon>
+                <span class="navigation__close-menu-button-description invisible-text">Close navigation menu</span>
+            </button>
+            <span class="big-line">Expressis Verbis</span>
+        </div>
+
+        <ul *ngIf="(selectedDictionary$ | async) as selectedDictionary" (click)="isMenuOpened = false"
+            class="navigation__menu-content">
+            <div class="navigation__menu-content-section">
+                <li class="navigation__menu-item">
+                    <a [routerLink]="['/', navigationPaths.newDictionary]" class="navigation__menu-item-link">Create New
+                        Dictionary
+                    </a>
+                </li>
+                <li class="navigation__menu-item">
+                    <a [routerLink]="['/', navigationPaths.availableDictionaries]" class="navigation__menu-item-link">
+                        Available Dictionaries
+                    </a>
+                </li>
+            </div>
+
+            <div class="navigation__menu-content-section">
+                <li class="navigation__menu-item"
+                    [ngClass]="{'navigation__menu-item_disabled': selectedDictionary.isNullDictionary}">
+                    <a [routerLink]="['/', navigationPaths.newEntry]" class="navigation__menu-item-link"
+                        (click)="selectedDictionary.isNullDictionary && $event.stopPropagation()"
+                        [attr.aria-disabled]="selectedDictionary.isNullDictionary">
+                        Add Dictionary Entry
+                    </a>
+                </li>
+                <li class="navigation__menu-item"
+                    [ngClass]="{'navigation__menu-item_disabled': selectedDictionary.isNullDictionary}">
+                    <a [routerLink]="['/', navigationPaths.entryList]" class="navigation__menu-item-link"
+                        (click)="selectedDictionary.isNullDictionary && $event.stopPropagation()"
+                        [attr.aria-disabled]="selectedDictionary.isNullDictionary">
+                        Selected Dictionary's Entries
+                    </a>
+                </li>
+            </div>
+
+            <div class="navigation__menu-content-section">
+                <li class="navigation__menu-item">
+                    <button (click)="showAboutModal()" class="navigation__menu-item-button">About</button>
+                </li>
+            </div>
+        </ul>
+    </nav>
+</div>
+
+<ng-template #aboutModalContent>
+    <app-about (close)="closeAboutModal()"></app-about>
+</ng-template>

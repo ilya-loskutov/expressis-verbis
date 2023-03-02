@@ -1,0 +1,45 @@
+@use './device-specific-rules';
+
+.alert {
+    position: fixed;
+    bottom: var(--medium-indent);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+
+    @include device-specific-rules.setWidthValuesForMainElement();
+
+    display: flex;
+    align-items: center;
+    padding: 0 var(--medium-indent);
+
+    box-shadow: -3px -3px 5px rgba(var(--text-color-rgb), 0.3),
+        1px 1px 5px rgba(var(--text-color-rgb), 0.3);
+    border-radius: 5px;
+
+    color: rgb(var(--panel-color-rgb));
+
+    &_state_success {
+        background-color: rgb(var(--success-color-rgb));
+    }
+
+    &_state_warning {
+        background-color: rgb(var(--warning-color-rgb));
+    }
+
+    &_state_error {
+        background-color: rgb(var(--error-color-rgb));
+    }
+
+    &__message {
+        flex: 1;
+
+        text-align: center;
+    }
+
+    &__close-button {
+        color: rgb(var(--panel-color-rgb));
+        background-color: inherit;
+        cursor: pointer;
+    }
+}

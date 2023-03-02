@@ -1,0 +1,59 @@
+@mixin stylizeEdges($color) {
+    border: 1px solid rgb($color);
+
+    &:focus {
+        outline: rgb($color) solid 1px;
+    }
+}
+
+.text-input {
+    $text_input: &;
+
+    &__control {
+        display: block;
+        width: 100%;
+
+        font-family: inherit;
+        border-radius: 5px;
+
+        &_multiline {
+            resize: vertical;
+        }
+
+        #{$text_input}_state_default & {
+            @include stylizeEdges(var(--text-color-rgb));
+        }
+
+        #{$text_input}_state_success & {
+            @include stylizeEdges(var(--success-color-rgb));
+        }
+
+        #{$text_input}_state_warning & {
+            @include stylizeEdges(var(--warning-color-rgb));
+        }
+
+        #{$text_input}_state_error & {
+            @include stylizeEdges(var(--error-color-rgb));
+        }
+    }
+
+    &__message {
+        font-family: inherit;
+
+        #{$text_input}_state_default & {
+            color: rgb(var(--cold-color-rgb));
+        }
+
+        #{$text_input}_state_success & {
+            color: rgb(var(--success-color-rgb));
+        }
+
+        #{$text_input}_state_warning & {
+            color: rgb(var(--warning-color-rgb));
+        }
+
+        #{$text_input}_state_error & {
+            color: rgb(var(--error-color-rgb));
+        }
+    }
+}

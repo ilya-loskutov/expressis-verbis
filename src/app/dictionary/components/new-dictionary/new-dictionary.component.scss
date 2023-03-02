@@ -1,0 +1,20 @@
+@use "sass:map";
+@use './device-specific-rules';
+
+.new-dictionary {
+    &__text-input {
+        margin-bottom: var(--small-indent);
+    }
+
+    @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+        &__form-controls {
+            display: flex;
+        }
+
+        &__text-input {
+            flex: 1;
+            margin-bottom: unset;
+            margin-right: var(--small-indent);
+        }
+    }
+}

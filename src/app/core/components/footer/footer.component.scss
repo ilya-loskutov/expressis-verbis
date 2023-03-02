@@ -1,0 +1,16 @@
+@use 'sass:map';
+@use './device-specific-rules';
+
+.footer {
+    padding: 0 var(--medium-indent);
+
+    @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+        padding: 0 var(--big-indent);
+    }
+
+    background-color: rgba(var(--core-panel-color-rgb), 0.20);
+
+    &__about-button {
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,45 @@
+@mixin dictionary-state-distinctions($color) {
+    color: rgb($color);
+    border: solid rgb($color) 1px;
+
+    &:hover {
+        background-color: rgba($color, 8%);
+    }
+}
+
+.available-dictionaries {
+    &__list {
+        &_populated>ul {
+            list-style-type: none;
+        }
+
+        &_empty>div {
+            text-align: center;
+            color: rgb(var(--cold-color-rgb));
+        }
+    }
+
+    &__dictionary {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-wrap: anywhere;
+
+        @supports not (overflow-wrap: anywhere) {
+            word-break: break-word;
+        }
+
+        @include dictionary-state-distinctions(var(--cold-color-rgb));
+
+        &_selected {
+            @include dictionary-state-distinctions(var(--warning-color-rgb));
+        }
+
+        cursor: pointer;
+        border-radius: 5px;
+
+        &+& {
+            margin-top: var(--small-indent);
+        }
+    }
+}

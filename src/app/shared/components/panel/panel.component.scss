@@ -1,0 +1,38 @@
+.panel {
+    padding: var(--medium-indent);
+
+    background-color: rgb(var(--panel-color-rgb));
+    box-shadow: -3px -3px 5px rgba(var(--text-color-rgb), 0.3),
+        1px 1px 5px rgba(var(--text-color-rgb), 0.3);
+    border-radius: 5px;
+
+    $panel: &;
+
+    &__title {
+
+        color: rgb(var(--panel-color-rgb));
+        text-transform: capitalize;
+        text-align: center;
+        border-radius: 5px;
+
+        &_with-bottom-indent {
+            margin-bottom: var(--small-indent);
+        }
+
+        #{$panel}_state_default & {
+            background-color: rgb(var(--cold-color-rgb));
+        }
+
+        #{$panel}_state_error & {
+            background-color: rgb(var(--error-color-rgb));
+        }
+
+        #{$panel}_state_success & {
+            background-color: rgb(var(--success-color-rgb));
+        }
+
+        #{$panel}_state_question & {
+            background-color: rgb(var(--question-color-rgb));
+        }
+    }
+}

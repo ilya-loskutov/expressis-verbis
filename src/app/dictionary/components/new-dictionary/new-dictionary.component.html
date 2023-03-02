@@ -1,0 +1,20 @@
+<app-panel class="new-dictionary">
+    <ng-container title>New Dictionary</ng-container>
+
+    <ng-container body>
+        <form [formGroup]="dictionaryForm" (ngSubmit)="onFormSubmit()" class="new-dictionary__form">
+            <p class="new-dictionary__form-controls">
+                <app-text-input formControlName="name" [state]="(textInputState$ | async)!"
+                    [message]="textInputMessage$ | async" placeholder="e.g.: German-Deutsch"
+                    class="new-dictionary__text-input">
+                </app-text-input>
+
+                <app-button [state]="ButtonState.conspicuous" [type]="'submit'" [disabled]="formButtonDisabled"
+                    class="new-dictionary__button" title="Create dictionary">
+                    <span class="invisible-text">Create dictionary</span>
+                    <fa-icon [icon]="faBook" size="lg"></fa-icon>
+                </app-button>
+            </p>
+        </form>
+    </ng-container>
+</app-panel>

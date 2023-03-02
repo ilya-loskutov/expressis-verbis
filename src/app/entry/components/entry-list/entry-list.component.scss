@@ -1,0 +1,26 @@
+.entry-list {
+    display: flex;
+    flex-direction: column;
+
+    &__entry+&__entry {
+        margin-top: var(--medium-indent);
+    }
+
+    &__pagination {
+        margin-top: var(--medium-indent);
+
+        display: flex;
+        justify-content: center;
+        gap: var(--small-indent);
+    }
+
+    &__pagination-option-description {
+        font-size: 0;
+        line-height: 0;
+    }
+
+    &__new-entry-link {
+        color: rgb(var(--cold-color-rgb));
+        font-weight: bolder;
+    }
+}

@@ -1,0 +1,109 @@
+@use 'sass:map';
+@use './device-specific-rules';
+
+.navigation {
+    $navigation: &;
+
+    &__open-menu-button {
+        display: block;
+
+        color: rgb(var(--panel-color-rgb));
+        text-align: center;
+        cursor: pointer;
+    }
+
+    &__backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        visibility: hidden;
+
+        transition-property: visibility;
+        transition-duration: 200ms;
+
+        background-color: rgba(var(--text-color-rgb), 0.5);
+        cursor: pointer;
+
+        #{$navigation}_opened & {
+            visibility: visible;
+        }
+    }
+
+    &__menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        transform: translateX(-100%);
+
+        transition-property: transform;
+        transition-duration: 200ms;
+
+        #{$navigation}_opened & {
+            transform: translateX(0);
+        }
+    }
+
+    &__menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 var(--medium-indent);
+
+        @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+            padding: 0 var(--big-indent);
+        }
+
+        background-color: rgb(var(--panel-color-rgb));
+        border-bottom: 1px solid rgba(var(--text-color-rgb), 0.5);
+    }
+
+    &__close-menu-button {
+        display: block;
+
+        text-align: center;
+        cursor: pointer;
+    }
+
+    &__menu-content {
+        background-color: rgb(var(--panel-color-rgb));
+    }
+
+    &__menu-content-section {
+        border-bottom: 1px solid rgba(var(--text-color-rgb), 0.5);
+    }
+
+    &__menu-item {
+        display: flex;
+        justify-content: center;
+    }
+
+    $menu-item: #{&}__menu-item;
+
+    &__menu-item-link,
+    &__menu-item-button {
+        flex: 1;
+        display: block;
+        padding: var(--small-indent) var(--medium-indent);
+
+        @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+            padding: var(--small-indent) var(--big-indent);
+        }
+
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba(var(--text-color-rgb), 0.1);
+        }
+
+        #{$menu-item}_disabled & {
+            background-color: unset;
+            color: rgba(var(--text-color-rgb), 0.5);
+            cursor: not-allowed;
+        }
+    }
+}

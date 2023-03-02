@@ -1,0 +1,6 @@
+Coding Conventions:
+
+1. We shouldn't use the ES2020 import() feature (which lets load modules at run-time) at production 
+and should rely on Angular lazy-loading mechanism instead. It's just for the sake of
+connection errors addressing uniformity. (As an instance, WebPack throws its own error
+on a module loading unsuccess, ChunkLoadError.)

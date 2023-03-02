@@ -1,0 +1,5 @@
+<button (click)="onClick($event)" type="{{type}}" [attr.disabled]="disabled ? true : null"
+    class="button button_state_{{state}}"
+    [ngClass]="{'button_disabled': disabled, 'big-line': size === 'medium', 'button_size_small': size === 'small', 'button_size_medium': size === 'medium'}">
+    <ng-content></ng-content>
+</button>

@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+:root {
+    --line-height-basis: 1.5rem;
+    --small-indent: calc(var(--line-height-basis) / 2);
+    --medium-indent: var(--line-height-basis);
+    --big-indent: calc(var(--line-height-basis) * 2);
+
+    --core-header-color-rgb: 56, 176, 84;
+    --core-panel-color-rgb: 116, 252, 147;
+    --panel-color-rgb: 255, 255, 255;
+    --text-color-rgb: 53, 69, 77;
+    --cold-color-rgb: 25, 118, 210;
+    --error-color-rgb: 252, 57, 85;
+    --success-color-rgb: 56, 176, 84;
+    --conspicuous-color-rgb: 252, 125, 4;
+    /*FC7D04*/
+    --warning-color-rgb: 252, 125, 4;
+    --question-color-rgb: 30, 176, 170;
+    --cute-color-rgb: 108, 83, 212;
+
+    box-sizing: border-box;
+
+    font-family: 'Source Sans Pro', sans-serif;
+    color: rgb(var(--text-color-rgb));
+    line-height: var(--line-height-basis);
+    background-color: rgba(var(--core-panel-color-rgb), 0.03);
+}
+
+*,
+::before,
+::after {
+    box-sizing: inherit;
+}

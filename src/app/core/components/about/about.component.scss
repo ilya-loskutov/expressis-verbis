@@ -1,0 +1,40 @@
+.about {
+    text-align: center;
+
+    &__contacts {
+        margin-top: var(--small-indent);
+    }
+
+    &__contact-link {
+        color: rgb(var(--cold-color-rgb));
+
+        &:hover {
+            font-weight: bolder;
+        }
+    }
+
+    &__disclaimer {
+        margin-top: var(--small-indent);
+    }
+
+    &__disclaimer-emphasized {
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    &__controls {
+        display: flex;
+        justify-content: center;
+        gap: var(--small-indent);
+        margin: var(--small-indent) auto 0;
+    }
+
+    &__not-ok-button {
+        transition: visibility 0ms linear 500ms, opacity 500ms linear 0ms;
+
+        &_hidden {
+            visibility: hidden;
+            opacity: 0;
+        }
+    }
+}

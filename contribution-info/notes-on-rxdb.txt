@@ -1,0 +1,22 @@
+Notes on RxDB (which is used as an IndexedDB provider):
+
+1. Seemingly, it doesn't have the facitily to ensure the existence of an entity in the db
+that is referenced to by a new entity, which we're going to save into the db.
+For example, when we are about to insert a new dictionary entry, the dictionary might be 
+removed from the db by this moment. Nevertheless, this mischief will be managed silently
+and the entry will be successfully saved.
+
+2. When we have collection.find({/* some query */}).subscribe(/* some callback */),
+we can't expect to see EVERY single change to the the collection at issue.
+
+Creator of RxDB Daniel Meyer (@pubkey) (from https://gitter.im/pubkey/rxdb):
+It is a performance optimization. This is written in the docs somewhere
+If you need all events, subscribe to the event stream instead
+Most people do not want to have a re-render of the ui once for each document write. 
+Therefore the query results try to be a combined emit if writes happen directly after another.
+
+3. We can't enforce the uniqueness of a field that is not a primary key.
+As a result, it is possible to create two dictionaries with the same names, for example.
+
+4. Currently it has a bug of deeming $gt and $gte Mango query operators to be the same things, 
+namely the latter, - for strings of the ISO 8601 format.

@@ -1,0 +1,7 @@
+<footer class="footer">
+    <button (click)="showAboutModal()" class="footer__about-button">about</button>
+</footer>
+
+<ng-template #aboutModalContent>
+    <app-about (close)="closeAboutModal()"></app-about>
+</ng-template>

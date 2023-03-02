@@ -1,0 +1,9 @@
+<div *ngIf="showModal$ | async as configurations" class="modal"
+    [ngClass]="{'modal_closable': configurations.isClosable}">
+    <div class="modal__backdrop" (click)="onBackdropClick()">
+    </div>
+
+    <div class="modal__container">
+        <ng-container *ngTemplateOutlet="configurations.content"></ng-container>
+    </div>
+</div>

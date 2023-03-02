@@ -1,0 +1,98 @@
+@use "sass:map";
+@use './device-specific-rules';
+
+.entry {
+    display: flex;
+    flex-direction: column;
+    gap: var(--medium-indent);
+
+    &__word-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--small-indent);
+    }
+
+    &__word-item {
+        display: flex;
+        align-items: center;
+        gap: var(--small-indent);
+
+        border-radius: 5px;
+        color: rgb(var(--cold-color-rgb));
+        border: 1px solid rgb(var(--cold-color-rgb));
+    }
+
+    &__word {
+        overflow-wrap: anywhere;
+
+        @supports not (overflow-wrap: anywhere) {
+            word-break: break-word;
+        }
+    }
+
+    &__delete-word {
+        cursor: pointer;
+
+        &:disabled {
+            cursor: auto;
+        }
+    }
+
+    &__new-word {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--small-indent);
+        margin-top: var(--small-indent);
+    }
+
+    &__new-word-input {
+        flex-basis: 100%;
+    }
+
+    @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+        &__new-word {
+            flex-wrap: nowrap;
+        }
+
+        &__new-word-input {
+            flex: 1;
+        }
+    }
+
+    &__meaning-list {
+        margin-bottom: var(--medium-indent);
+    }
+
+    &__meaning {
+        display: block;
+
+        &+& {
+            margin-top: var(--medium-indent);
+        }
+
+        &_state_deleted {
+            font-style: italic;
+            font-weight: bolder;
+
+            &>p {
+                display: flex;
+                gap: var(--small-indent);
+            }
+        }
+    }
+
+    &__meaning-definition {
+        margin-bottom: var(--small-indent);
+    }
+
+    &__meaning-actions {
+        display: flex;
+        gap: var(--small-indent);
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: center;
+        gap: var(--small-indent);
+    }
+}

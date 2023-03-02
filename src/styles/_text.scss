@@ -1,0 +1,10 @@
+.big-line {
+    font-size: 1.5rem;
+    line-height: calc(1.5 * var(--line-height-basis));
+    padding: calc(var(--small-indent) - 0.25 * var(--line-height-basis)) var(--small-indent);
+}
+
+.invisible-text {
+    font-size: 0;
+    line-height: 0;
+}

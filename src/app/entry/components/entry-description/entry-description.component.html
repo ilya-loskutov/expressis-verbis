@@ -1,0 +1,60 @@
+<app-panel *ngIf="state | async as state" class="entry-description entry-description_state_{{state}}">
+    <ng-container body>
+
+        <div class="entry-description__main-line">
+            <ng-container *ngIf="state === 'loading'; then mainLineLoader; else words;"></ng-container>
+
+            <ng-template #mainLineLoader>
+                <div class="entry-description__main-line-loader"></div>
+            </ng-template>
+
+            <ng-template #words>
+                <a class="entry-description__words" (click)="onWordsClick($event)">
+                    <span *ngFor="let word of entry.words" class="entry-description__word big-line">
+                        {{word}}
+                    </span>
+                </a>
+            </ng-template>
+
+            <div class="entry-description__delete-entry">
+                <button (click)="onDeleteEntryClick()" [attr.disabled]="state === 'default' ? null : true"
+                    title="Delete this entry">
+                    <span class="invisible-text">Delete this entry</span>
+                    <fa-icon [icon]="faXmarkCircle" size="2x"></fa-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="entry-description__auxiliary-line">
+            <ng-container *ngIf="state === 'loading'; then auxiliaryLineLoader; else lastUpdated;"></ng-container>
+
+            <ng-template #auxiliaryLineLoader>
+                <div class="entry-description__auxiliary-line-loader">
+                    Last updated: {{'2023-01-03T14:53:00.000Z' | date: 'medium'}}
+                </div>
+            </ng-template>
+
+            <ng-template #lastUpdated>
+                <div class="entry-description__last-updated">
+                    Last updated: {{entry.lastUpdated | date: 'medium'}}
+                </div>
+            </ng-template>
+        </div>
+
+    </ng-container>
+</app-panel>
+
+<ng-template #deleteEntryModalContent>
+    <app-panel [state]="PanelState.question" class="entry-description__delete-entry-modal">
+
+        <ng-container title>Delete This Entry?</ng-container>
+
+        <ng-container body>
+            <div class="entry-description__delete-entry-options">
+                <app-button (click)="onDeleteEntryModalYesClick()" [state]="ButtonState.success">Yes</app-button>
+                <app-button (click)="onDeleteEntryModalNoClick()" [state]="ButtonState.error">No</app-button>
+            </div>
+        </ng-container>
+
+    </app-panel>
+</ng-template>

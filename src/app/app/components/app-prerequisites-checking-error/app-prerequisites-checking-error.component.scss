@@ -1,0 +1,21 @@
+@use './device-specific-rules';
+
+.app-prerequisites-checking-error {
+    margin: var(--medium-indent) auto auto;
+
+    @include device-specific-rules.setWidthValuesForMainElement();
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__message {
+        text-align: center;
+    }
+
+    &__awareness {
+        margin-top: var(--small-indent);
+    }
+}

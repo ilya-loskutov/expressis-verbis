@@ -1,0 +1,24 @@
+@use './device-specific-rules';
+
+.core {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    &__header,
+    &__theme-bar {
+        flex: 0 0 var(--big-indent);
+    }
+
+    &__main {
+        flex: none;
+        margin: var(--medium-indent) auto auto;
+
+        @include device-specific-rules.setWidthValuesForMainElement();
+    }
+
+    &__footer {
+        flex: 0 0 var(--medium-indent);
+        margin-top: var(--medium-indent);
+    }
+}

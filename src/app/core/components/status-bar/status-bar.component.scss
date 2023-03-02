@@ -1,0 +1,17 @@
+@use 'sass:map';
+@use './device-specific-rules';
+
+.status-bar {
+    display: flex;
+    padding: var(--small-indent) var(--medium-indent);
+
+    @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+        padding: var(--small-indent) var(--big-indent);
+    }
+
+    background-color: rgba(var(--core-panel-color-rgb), 0.20);
+
+    &__header {
+        font-weight: bold;
+    }
+}

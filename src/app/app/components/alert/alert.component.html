@@ -1,0 +1,19 @@
+<div *ngIf="showAlert$ | async as configurations" class="alert alert_state_{{configurations.state}}">
+
+    <div [ngSwitch]="configurations.state" class="alert__icon">
+        <fa-icon *ngSwitchCase="AlertState.success" [icon]="faCheck" size="2x" class="bars-icon"></fa-icon>
+        <fa-icon *ngSwitchCase="AlertState.error" [icon]="faBomb" size="2x" class="bars-icon"></fa-icon>
+    </div>
+
+    <div class="alert__message big-line">
+        {{configurations.message}}
+    </div>
+
+    <div class="close">
+        <button (click)="onCloseClick()" class="alert__close-button" type="button" title="Close This Window">
+            <fa-icon [icon]="faXmarkCircle" size="2x" class="bars-icon"></fa-icon>
+            <span class="invisible-text">Close This Window</span>
+        </button>
+    </div>
+
+</div>

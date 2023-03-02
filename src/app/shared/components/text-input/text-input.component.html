@@ -1,0 +1,19 @@
+<div class="text-input text-input_state_{{state}}">
+    <ng-container *ngIf="isMultiline then multiline; else singleline"></ng-container>
+
+    <ng-template #multiline>
+        <textarea #control [ngModel]="controlValue" (ngModelChange)="onChange!(control.value)" (blur)="onTouched!()"
+            class="text-input__control text-input__control_multiline" [disabled]="disabled"
+            [attr.placeholder]="placeholder" [attr.maxlength]="maxlength"></textarea>
+    </ng-template>
+
+    <ng-template #singleline>
+        <input #control [ngModel]="controlValue" (ngModelChange)="onChange!(control.value)" (blur)="onTouched!()"
+            type="text" class="text-input__control text-input__control_singleline big-line" [disabled]="disabled"
+            [attr.placeholder]="placeholder" [attr.maxlength]="maxlength">
+    </ng-template>
+
+    <p *ngIf="message" class="text-input__message">
+        {{message}}
+    </p>
+</div>

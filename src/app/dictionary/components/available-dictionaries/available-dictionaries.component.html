@@ -1,0 +1,35 @@
+<app-panel *ngIf="(availableDictionaries$ | async) as availableDictionaries" [state]="PanelState.default"
+    [indentBelowTitle]="!areThereNoAvailableDictionaries(availableDictionaries)" class="available-dictionaries">
+
+    <ng-container title>
+        Available Dictionaries
+    </ng-container>
+
+    <ng-container body>
+        <div class="available-dictionaries__list"
+            [ngClass]="areThereNoAvailableDictionaries(availableDictionaries) ? 'available-dictionaries__list_empty' : 'available-dictionaries__list_populated'">
+
+            <ng-container
+                *ngIf="areThereNoAvailableDictionaries(availableDictionaries); then emptyList; else populatedList">
+            </ng-container>
+
+            <ng-template #emptyList>
+                <div class="big-line">
+                    ...were not found 🧐
+                </div>
+            </ng-template>
+
+            <ng-template #populatedList>
+                <ul *ngIf="(selectedDictionary$ | async) as selectedDictionary">
+                    <li *ngFor="let dictionary of availableDictionaries" (click)="onDictionaryClick(dictionary)"
+                        class="available-dictionaries__dictionary big-line"
+                        [ngClass]="{'available-dictionaries__dictionary_selected': dictionary.equals(selectedDictionary)}">
+                        <span class="available-dictionaries__dictionary-name">{{dictionary.name}}</span>
+                    </li>
+                </ul>
+            </ng-template>
+
+        </div>
+    </ng-container>
+
+</app-panel>

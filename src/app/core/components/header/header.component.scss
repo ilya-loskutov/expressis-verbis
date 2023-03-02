@@ -1,0 +1,18 @@
+@use 'sass:map';
+@use './device-specific-rules';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--small-indent) var(--medium-indent);
+
+    @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+        padding: var(--small-indent) var(--big-indent);
+    }
+
+    background-color: rgb(var(--core-header-color-rgb));
+
+    &__navigation {
+        margin-right: var(--medium-indent);
+    }
+}
