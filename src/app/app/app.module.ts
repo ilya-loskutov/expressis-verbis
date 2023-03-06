@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
@@ -11,6 +11,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { AppPrerequisitesCheckingErrorComponent } from './components/app-prerequisites-checking-error/app-prerequisites-checking-error.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,13 @@ import { ModalComponent } from './components/modal/modal.component';
     CoreModule,
     SharedModule,
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   bootstrap: [AppComponent]
 })
