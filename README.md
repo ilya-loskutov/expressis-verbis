@@ -1,27 +1,15 @@
-# ExpressisVerbis
+# Expressis Verbis
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.3.
+A simple web application that will help you to make your way in mastering languages. It serves as a dictionary which you can populate with word definitions and usage examples as you wish. So, you get the opportunity to collect several definitions of a word from different dictionaries or its usage examples from a range of sources (books, videos, social medias, and so on) in one single place.
 
-## Development server
+## Technical Requirements
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Evergreen browser
 
-## Code scaffolding
+- Support for (IndexedDB API)[https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API] - Currently the application is designed to be installable and able to operate entirely off-line[^1]. Hence, your browser needs to support internal storage, which is IndexedDB.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+[^1]: There is a need to launch a server (local or remote) only for installing purposes.
 
-## Build
+## Disclaimer
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+The application is still under development and has no release version. Please use it only to acquire a first impression and do not hold out much hope that the first release version will preserve your stored data.
