@@ -13,7 +13,6 @@ import { PanelState } from 'src/app/shared/config/components/panel';
   styleUrls: ['./available-dictionaries.component.scss']
 })
 export class AvailableDictionariesComponent implements OnInit {
-
   faFlag = faFlag;
 
   PanelState = PanelState;

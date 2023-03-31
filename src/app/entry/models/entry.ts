@@ -1,5 +1,4 @@
 export class EntryDescription {
-
     constructor(
         public readonly id: string,
         public words: string[],
@@ -8,14 +7,12 @@ export class EntryDescription {
 }
 
 export class LoadingEntry extends EntryDescription {
-
     constructor() {
         super('dummyId', [], 'dummyLastUpdated')
     }
 }
 
 export class Meaning {
-
     constructor(
         public definition: string,
         public examples: string[]
@@ -23,7 +20,6 @@ export class Meaning {
 }
 
 export class Entry extends EntryDescription {
-
     constructor(
         id: string,
         words: string[],

@@ -9,7 +9,6 @@ import { Dictionary, NullDictionary } from "../models/dictionary";
     providedIn: 'root'
 })
 export class DictionaryFactory {
-
     createNewDictionary(name: string): Dictionary {
         return new Dictionary(uuidv4(), name);
     }

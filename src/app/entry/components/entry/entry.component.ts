@@ -21,7 +21,6 @@ import { onlyWhiteSpacesPreventionValidator } from 'src/app/shared/services/form
   styleUrls: ['./entry.component.scss']
 })
 export class EntryComponent implements OnInit {
-
   faXmarkCircle = faXmarkCircle;
 
   ButtonState = ButtonState;

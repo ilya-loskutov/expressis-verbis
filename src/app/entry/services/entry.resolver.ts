@@ -19,7 +19,6 @@ import { EntryFactory } from './entry.factory';
   providedIn: 'root'
 })
 export class EntryResolver implements Resolve<Entry> {
-
   constructor(
     private entryService: EntryService,
     private entryFactory: EntryFactory,

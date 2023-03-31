@@ -12,7 +12,6 @@ import { navigationPaths } from 'src/app/shared/config/navigation-paths/navigati
   styleUrls: ['./status-bar.component.scss']
 })
 export class StatusBarComponent implements OnInit {
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,

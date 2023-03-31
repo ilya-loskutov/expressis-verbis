@@ -1,15 +1,11 @@
 <app-panel [state]="PanelState.error" class="app-prerequisites-checking-error">
-
     <ng-container title>{{error.title}}</ng-container>
-
     <div body class="app-prerequisites-checking-error__content">
         <div class="app-prerequisites-checking-error__message">
             {{error.message}}
         </div>
-
         <div class="app-prerequisites-checking-error__awareness">
             <app-button [state]="ButtonState.error" (click)="onAwarenessButtonClick()">I've got it</app-button>
         </div>
     </div>
-
 </app-panel>

@@ -12,7 +12,6 @@ import { ModalConfigurations } from 'src/app/shared/config/components/modal';
   styleUrls: ['./selected-dictionary.component.scss']
 })
 export class SelectedDictionaryComponent implements OnInit {
-
   constructor(
     @Inject(SHOW_MODAL) private showModal$: BehaviorSubject<ModalConfigurations | null>,
     @Inject(SELECTED_DICTIONARY_PROVIDER) public selectedDictionaryProvider: SelectedDictionaryProvider

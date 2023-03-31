@@ -8,7 +8,6 @@ import { ButtonState } from 'src/app/shared/config/components/button';
   styleUrls: ['./about.component.scss']
 })
 export class AboutComponent implements OnInit {
-
   ButtonState = ButtonState;
 
   @Output() close = new EventEmitter<void>();

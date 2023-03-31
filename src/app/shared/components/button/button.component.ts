@@ -8,7 +8,6 @@ import { ButtonState } from '../../config/components/button';
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent implements OnInit {
-
   @Input() state: ButtonState = ButtonState.default;
   @Input() type: 'button' | 'reset' | 'submit' = 'button';
   @Input() disabled: boolean = false;

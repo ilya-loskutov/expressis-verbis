@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dictionary-options.component.scss']
 })
 export class DictionaryOptionsComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit(): void {

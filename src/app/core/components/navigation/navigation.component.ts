@@ -15,7 +15,6 @@ import { ModalConfigurations } from 'src/app/shared/config/components/modal';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
-
   faBars = faBars;
 
   navigationPaths = navigationPaths;

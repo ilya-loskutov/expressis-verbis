@@ -1,7 +1,6 @@
 <form [formGroup]="entryForm" (ngSubmit)="onFormSubmit()" class="entry">
     <app-panel id="words" class="entry__words">
         <ng-container title>Related Words</ng-container>
-
         <ng-container body>
             <ul *ngIf="entry.words.length > 0" class="entry__word-list">
                 <li *ngFor="let word of entry.words; let index = index;" class="entry__word-item big-line">
@@ -14,14 +13,12 @@
                     </button>
                 </li>
             </ul>
-
             <div class="entry__new-word">
                 <app-text-input formControlName="newWord" placeholder="e.g.: patient, patience"
                     [message]="newWordTextInputMessage$ | async"
                     [state]="(newWordTextInputState$ | async) ?? TextInputState.default"
                     [maxlength]="entryPropertiesValidationValues.wordMaxLength"
                     class="entry__new-word-input"></app-text-input>
-
                 <app-button [state]="ButtonState.conspicuous" (click)="addNewWord()"
                     [disabled]="isAddWordButtonDisabled">
                     Add
@@ -29,10 +26,8 @@
             </div>
         </ng-container>
     </app-panel>
-
     <app-panel class="entry__meanings">
         <ng-container title>Definitions & Examples</ng-container>
-
         <ng-container body>
             <ul *ngIf="entry.meanings.length > 0" class="entry__meaning-list">
                 <ng-container *ngFor="let meaning of entry.meanings; let index = index;">
@@ -43,16 +38,13 @@
                                     📝 {{meaning.definition}}
                                 </p>
                             </div>
-
                             <div class="entry__meaning-actions">
                                 <app-button (click)="editMeaning(index)" [state]="ButtonState.success"
                                     [disabled]="isEditMeaningButtonDisabled" [size]="'small'">Edit</app-button>
-
                                 <app-button (click)="deleteMeaning(index)" [state]="ButtonState.error"
                                     [disabled]="isDeleteMeaningButtonDisabled" [size]="'small'">Delete</app-button>
                             </div>
                         </li>
-
                         <li *ngSwitchCase="'being-edited'" class="entry__meaning entry__meaning_state_being-edited">
                             <div class="entry__meaning-definition">
                                 <div [formGroup]="entryForm.controls.meanings.value[index]!">
@@ -60,7 +52,6 @@
                                         placeholder="The place for a definition"></app-text-input>
                                 </div>
                             </div>
-
                             <div class="entry__meaning-actions">
                                 <app-button (click)="acceptMeaningEdition(index)"
                                     [disabled]="isAcceptMeaningEditionDisabled(index)" [state]="ButtonState.success"
@@ -70,7 +61,6 @@
                                     [size]="'small'">Discard</app-button>
                             </div>
                         </li>
-
                         <li *ngSwitchCase="'deleted'" class="entry__meaning entry__meaning_state_deleted">
                             <p>
                                 <span>This meaning has been deleted</span>
@@ -82,7 +72,6 @@
                     </ng-container>
                 </ng-container>
             </ul>
-
             <div class="entry__new-meaning">
                 <app-button (click)="addMeaning()" [state]="ButtonState.conspicuous"
                     [disabled]="isAddMeaningButtonDisabled">
@@ -91,12 +80,10 @@
             </div>
         </ng-container>
     </app-panel>
-
     <div class="entry__actions">
         <app-button [state]="ButtonState.success" [disabled]="isSubmitButtonDisabled" type="submit">
             Save
         </app-button>
-
         <app-button (click)="onCancelClick()" [state]="ButtonState.error" [disabled]="isCancelButtonDisabled">
             Cancel
         </app-button>

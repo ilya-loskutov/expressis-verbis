@@ -3,20 +3,17 @@
         <app-entry-description *ngFor="let entry of entryPageList.entries" [entry]="entry" class="entry-list__entry">
         </app-entry-description>
     </div>
-
     <div *ngIf="entryPageList.entries.length === 0" class="entry-list_empty">
         No entries were found for the selected dictionary. <a [routerLink]="['/', newEntryPath]"
             class="entry-list__new-entry-link">Click here</a> to
         create a new one.
     </div>
-
     <div *ngIf="entryPageList.hasPreviousPage || entryPageList.hasNextPage" class="entry-list__pagination">
         <app-button *ngIf="entryPageList.hasPreviousPage" [state]="ButtonState.conspicuous"
             (click)="onMoveToPreviousPageClick()">
             <fa-icon [icon]="faCircleChevronLeft" class="bars-icon" size="1x"></fa-icon>
             <span class="entry-list__pagination-option-description">Move To Previous Page</span>
         </app-button>
-
         <app-button *ngIf="entryPageList.hasNextPage" [state]="ButtonState.conspicuous"
             (click)="onMoveToNextPageClick()">
             <fa-icon [icon]="faCircleChevronRight" class="bars-icon" size="1x"></fa-icon>

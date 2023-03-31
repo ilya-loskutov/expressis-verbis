@@ -1,13 +1,11 @@
 <ng-container *ngIf="(selectedDictionaryProvider.selectedDictionary$ | async) as selectedDictionary">
     <ng-container *ngIf="selectedDictionary.isNullDictionary; then nullDictionary; else nonNullDictionary">
     </ng-container>
-
     <ng-template #nullDictionary>
         <div class="selected-dictionary selected-dictionary_null-dictionary" title="No dictionary is selected">
             No dictionary is selected
         </div>
     </ng-template>
-
     <ng-template #nonNullDictionary>
         <div (click)="onNonNullDictionaryClick()" class="selected-dictionary"
             title="Click to change selected dictionary">
@@ -15,7 +13,6 @@
         </div>
     </ng-template>
 </ng-container>
-
 <ng-template #availableDictionariesModalContent>
     <app-available-dictionaries></app-available-dictionaries>
 </ng-template>

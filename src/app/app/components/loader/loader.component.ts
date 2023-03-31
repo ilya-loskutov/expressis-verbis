@@ -10,7 +10,6 @@ import { SHOW_PRELOADER } from 'src/app/shared/services/positioned-windows/show-
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-
   constructor(
     @Inject(SHOW_PRELOADER) public showPreloader$: BehaviorSubject<boolean>
   ) { }

@@ -11,7 +11,6 @@ import { SHOW_MODAL } from 'src/app/shared/services/positioned-windows/show-moda
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
-
   constructor(
     @Inject(SHOW_MODAL) public showModal$: BehaviorSubject<ModalConfigurations | null>
   ) { }

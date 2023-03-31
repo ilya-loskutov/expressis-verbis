@@ -14,7 +14,6 @@ import { dictionarySchema, entrySchema, databaseName } from '../../config/databa
     providedIn: 'root'
 })
 export class DatabaseService {
-
     constructor() {
         this._databaseCreationPromise = this.createDatabase();
     }

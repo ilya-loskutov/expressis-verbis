@@ -7,7 +7,6 @@ import { Entry } from "src/app/shared/models/database/database.types";
 import { EntryCollection } from "src/app/shared/models/database/database.types";
 
 export class DefaultEntryListProvider implements EntryListProvider {
-
     constructor(
         entryCollectionPromise: Promise<EntryCollection>,
         entryFactory: EntryFactory,

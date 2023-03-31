@@ -18,7 +18,6 @@ import { TextInputState } from '../../config/components/text-input';
   }]
 })
 export class TextInputComponent implements ControlValueAccessor {
-
   @Input() placeholder: string | null = null;
   @Input() maxlength: number | null = null;
   @Input() disabled: boolean = false;

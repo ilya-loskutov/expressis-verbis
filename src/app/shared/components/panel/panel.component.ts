@@ -11,7 +11,6 @@ import { PanelState } from '../../config/components/panel';
   ]
 })
 export class PanelComponent implements OnInit {
-
   @Input() state: PanelState = PanelState.default;
   @Input() indentBelowTitle: boolean = true;
 

@@ -8,7 +8,6 @@ import { EntryComponent } from '../components/entry/entry.component';
   providedIn: 'root'
 })
 export class CanDeactivateEntryGuard implements CanDeactivate<EntryComponent> {
-
   canDeactivate(
     component: EntryComponent,
     currentRoute: ActivatedRouteSnapshot,

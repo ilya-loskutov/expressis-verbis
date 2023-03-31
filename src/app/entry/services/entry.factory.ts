@@ -9,7 +9,6 @@ import { EntryDescription, LoadingEntry, Entry, Meaning } from "../models/entry"
     providedIn: 'root'
 })
 export class EntryFactory {
-
     createEntry(dictionaryId: string): Entry {
         return new Entry(
             uuidv4(),

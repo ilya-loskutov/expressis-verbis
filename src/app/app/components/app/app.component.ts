@@ -12,7 +12,6 @@ import { SHOW_PRELOADER } from '../../../shared/services/positioned-windows/show
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
   constructor(
     private appPrerequisitesChecker: AppPrerequisitesChecker,
     @Inject(SHOW_PRELOADER) private showPreloader$: BehaviorSubject<boolean>,

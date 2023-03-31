@@ -9,7 +9,6 @@ import { AppPrerequisitesCheckingError, IndexedDBUnavailableError, DatabaseCanno
     providedIn: 'root'
 })
 export class AppPrerequisitesChecker {
-
     constructor(private databaseService: DatabaseService) { }
 
     async run(): Promise<void> {

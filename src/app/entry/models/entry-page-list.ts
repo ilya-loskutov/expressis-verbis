@@ -7,7 +7,6 @@ import { EntryDescription } from "./entry";
 import { assert } from "src/app/shared/utils/assert/assert";
 
 export class EntryPageList {
-
     constructor(pageSize: number, entryListProvider: EntryListProvider, entryFactory: EntryFactory) {
         if (pageSize < 1) {
             throw new Error(`pageSize cannot be less than 1. The received value was ${pageSize}`);

@@ -18,7 +18,6 @@ import { assert } from 'src/app/shared/utils/assert/assert';
   styleUrls: ['./entry-list.component.scss']
 })
 export class EntryListComponent implements OnInit, OnDestroy {
-
   faCircleChevronLeft = faCircleChevronLeft;
   faCircleChevronRight = faCircleChevronRight;
 

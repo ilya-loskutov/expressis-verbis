@@ -10,7 +10,6 @@ import { DictionaryService } from 'src/app/dictionary/services/dictionary.servic
   styleUrls: ['./core.component.scss']
 })
 export class CoreComponent implements OnInit {
-
   constructor(
     private dictionaryService: DictionaryService,
     private router: Router,

@@ -12,7 +12,6 @@ import { Entry } from '../models/entry';
   providedIn: 'root'
 })
 export class EntryService {
-
   constructor(databaseService: DatabaseService, entryFactory: EntryFactory) {
     this._entryCollectionPromise = databaseService.database
       .then((database: Database) => database.entry);

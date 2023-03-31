@@ -17,7 +17,6 @@ import { assert } from 'src/app/shared/utils/assert/assert';
   styleUrls: ['./new-dictionary.component.scss']
 })
 export class NewDictionaryComponent implements OnInit {
-
   ButtonState = ButtonState;
 
   faBook = faBook;

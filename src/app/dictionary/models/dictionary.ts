@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { navigationPaths } from "src/app/shared/config/navigation-paths/navigation-paths";
 
 export class Dictionary {
-
     constructor(id: string, name: string) {
         this.id = id;
         this.name = name;
@@ -28,7 +27,6 @@ export class Dictionary {
 }
 
 export class NullDictionary extends Dictionary {
-
     constructor() {
         super('dummyId', 'dummyName');
     }

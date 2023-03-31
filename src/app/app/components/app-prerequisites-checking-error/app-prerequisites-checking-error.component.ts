@@ -14,7 +14,6 @@ import { AlertState, AlertConfigurations } from 'src/app/shared/config/component
   styleUrls: ['./app-prerequisites-checking-error.component.scss']
 })
 export class AppPrerequisitesCheckingErrorComponent implements OnInit {
-
   @Input() error!: AppPrerequisitesCheckingError;
 
   PanelState = PanelState;

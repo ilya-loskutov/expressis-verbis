@@ -13,7 +13,6 @@ import { SHOW_ALERT } from 'src/app/shared/services/positioned-windows/show-aler
   styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent implements OnInit {
-
   faCheck = faCheck;
   faXmarkCircle = faXmarkCircle;
   faBomb = faBomb;

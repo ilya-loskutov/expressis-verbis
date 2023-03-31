@@ -10,7 +10,6 @@ import { DictionaryService } from 'src/app/dictionary/services/dictionary.servic
   providedIn: 'root'
 })
 export class SelectedDictionaryGuard implements CanActivate {
-
   constructor(
     private dictionaryService: DictionaryService,
   ) { }

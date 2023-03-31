@@ -1,14 +1,11 @@
 <div class="navigation" [ngClass]="{'navigation_opened': isMenuOpened}">
     <h2 class="invisible-text">Navigation Menu</h2>
-
     <button (click)="isMenuOpened = true" class="navigation__open-menu-button">
         <fa-icon [icon]="faBars" size="lg"></fa-icon>
         <span class="navigation__open-menu-button-description invisible-text">Open navigation menu</span>
     </button>
-
     <div (click)="isMenuOpened = false" class="navigation__backdrop">
     </div>
-
     <nav class="navigation__menu">
         <div class="navigation__menu-header">
             <button (click)="isMenuOpened = false" class="navigation__close-menu-button">
@@ -17,7 +14,6 @@
             </button>
             <span class="big-line">Expressis Verbis</span>
         </div>
-
         <ul *ngIf="(selectedDictionary$ | async) as selectedDictionary" (click)="isMenuOpened = false"
             class="navigation__menu-content">
             <div class="navigation__menu-content-section">
@@ -32,7 +28,6 @@
                     </a>
                 </li>
             </div>
-
             <div class="navigation__menu-content-section">
                 <li class="navigation__menu-item"
                     [ngClass]="{'navigation__menu-item_disabled': selectedDictionary.isNullDictionary}">
@@ -51,7 +46,6 @@
                     </a>
                 </li>
             </div>
-
             <div class="navigation__menu-content-section">
                 <li class="navigation__menu-item">
                     <button (click)="showAboutModal()" class="navigation__menu-item-button">About</button>
@@ -60,7 +54,6 @@
         </ul>
     </nav>
 </div>
-
 <ng-template #aboutModalContent>
     <app-about (close)="closeAboutModal()"></app-about>
 </ng-template>

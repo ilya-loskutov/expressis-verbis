@@ -19,7 +19,6 @@ import { SelectedDictionaryProvider } from './selected-dictionary-provider';
   providedIn: 'root'
 })
 export class DictionaryService implements SelectedDictionaryProvider {
-
   constructor(
     databaseService: DatabaseService,
     dictionaryFactory: DictionaryFactory

@@ -25,7 +25,6 @@ import { assert } from 'src/app/shared/utils/assert/assert';
   ]
 })
 export class EntryDescriptionComponent implements OnInit {
-
   @Input() entry!: EntryDescription;
 
   faXmarkCircle = faXmarkCircle;

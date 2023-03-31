@@ -11,7 +11,6 @@ import { ModalConfigurations } from 'src/app/shared/config/components/modal';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-
   constructor(
     @Inject(SHOW_MODAL) private showModal$: BehaviorSubject<ModalConfigurations | null>
   ) {
