@@ -81,7 +81,7 @@ export class DefaultEntryListProvider implements EntryListProvider {
 
     private isThereNeedToAddressRxDBBug(query: EntryQuery): boolean {
         /* 
-        RxDB considers the $gt and $gte operators with regard to an UTC field indiscriminately, 
+        RxDB considers the $gt and $gte operators with regard to a UTC field indiscriminately, 
         as the latter one
         */
         return query.direction === 'forward' &&
