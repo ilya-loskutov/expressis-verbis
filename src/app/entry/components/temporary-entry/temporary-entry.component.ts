@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, Subject } from 'rxjs';
 
 import { Entry } from '../../models/entry';
-import { entryWordsValidators } from '../../services/entry-words-validator';
+import { entryWordsValidator } from '../../services/entry-words-validator';
 
 @Component({
   selector: 'app-temporary-entry',
@@ -33,7 +33,7 @@ export class TemporaryEntryComponent {
   }> = this.formBuilder.nonNullable.group({
     words: [
       [] as string[],
-      [entryWordsValidators]
+      [entryWordsValidator]
     ]
   });
 
