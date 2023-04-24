@@ -41,7 +41,7 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
   }
 
   private subscribeToNotificationsOfAttemptToSubmitInvalidForm(): void {
-    this.invalidFormSubmittingAttemptsSubscription = this.invalidFormSubmittingAttempts$.subscribe(() => {
+    this.attemptsToSubmitInvalidFormSubscription = this.attemptsToSubmitInvalidForm$.subscribe(() => {
       assert(this.entryWords.length < entryWordsValidationValues.wordsMinLength,
         `The entry's words is of ${this.entryWords.length} length while it is expected to be of less than the min allowable value (${entryWordsValidationValues.wordsMinLength})`);
 
@@ -49,8 +49,8 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     });
   }
 
-  private invalidFormSubmittingAttemptsSubscription!: Subscription;
-  @Input() invalidFormSubmittingAttempts$!: Observable<void>;
+  private attemptsToSubmitInvalidFormSubscription!: Subscription;
+  @Input() attemptsToSubmitInvalidForm$!: Observable<void>;
 
   private updateNewWordTextInputStatus(message: string, state: TextInputState): void {
     this.newWordTextInputMessage$.next(message);
@@ -138,6 +138,6 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
   }
 
   ngOnDestroy(): void {
-    this.invalidFormSubmittingAttemptsSubscription.unsubscribe();
+    this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
   }
 }

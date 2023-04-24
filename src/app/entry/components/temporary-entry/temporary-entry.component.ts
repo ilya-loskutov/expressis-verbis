@@ -37,5 +37,5 @@ export class TemporaryEntryComponent {
     ]
   });
 
-  invalidFormSubmittingAttempts$ = new Subject<void>();
+  attemptsToSubmitInvalidForm$ = new Subject<void>();
 }
