@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DictionaryOptionsComponent } from '../dictionary/components/dictionary-options/dictionary-options.component';
-import { EntryComponent } from '../entry/components/entry/entry.component';
+//import { EntryComponent } from '../entry/components/entry/entry.component';
+import { TemporaryEntryComponent } from '../entry/components/temporary-entry/temporary-entry.component';
 import { EntryListComponent } from '../entry/components/entry-list/entry-list.component';
 import { navigationPaths } from '../shared/config/navigation-paths/navigation-paths';
 import { SelectedDictionaryGuard } from './services/selected-dictionary.guard';
@@ -25,14 +26,14 @@ const routes: Routes = [
   },
   {
     path: navigationPaths.newEntry,
-    component: EntryComponent,
+    component: /* EntryComponent */ TemporaryEntryComponent,
     canActivate: [SelectedDictionaryGuard],
     resolve: { entry: EntryResolver },
     canDeactivate: [CanDeactivateEntryGuard]
   },
   {
     path: navigationPaths.entry,
-    component: EntryComponent,
+    component: /* EntryComponent */ TemporaryEntryComponent,
     canActivate: [SelectedDictionaryGuard],
     resolve: { entry: EntryResolver },
     canDeactivate: [CanDeactivateEntryGuard]

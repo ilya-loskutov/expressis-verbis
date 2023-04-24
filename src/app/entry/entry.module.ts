@@ -10,6 +10,7 @@ import { EntryComponent } from './components/entry/entry.component';
 import { EntryListComponent } from './components/entry-list/entry-list.component';
 import { EntryDescriptionComponent } from './components/entry-description/entry-description.component';
 import { EntryWordsComponent } from './components/entry-words/entry-words.component';
+import { TemporaryEntryComponent } from './components/temporary-entry/temporary-entry.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EntryWordsComponent } from './components/entry-words/entry-words.compon
     EntryListComponent,
     EntryDescriptionComponent,
     EntryWordsComponent,
+    TemporaryEntryComponent,
   ],
   imports: [
     CommonModule,
