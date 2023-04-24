@@ -1,1 +1,4 @@
-<p>temporary-entry works!</p>
+<form [formGroup]="form">
+    <app-entry-words formControlName="words"
+        [invalidFormSubmittingAttempts$]="invalidFormSubmittingAttempts$"></app-entry-words>
+</form>

@@ -50,7 +50,7 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
   }
 
   private invalidFormSubmittingAttemptsSubscription!: Subscription;
-  @Input() private invalidFormSubmittingAttempts$!: Observable<void>;
+  @Input() invalidFormSubmittingAttempts$!: Observable<void>;
 
   private updateNewWordTextInputStatus(message: string, state: TextInputState): void {
     this.newWordTextInputMessage$.next(message);
