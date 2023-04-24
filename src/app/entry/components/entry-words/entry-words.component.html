@@ -1,1 +1,27 @@
-<p>entry-words works!</p>
+<app-panel class="entry-words">
+    <ng-container title>Related Words</ng-container>
+    <ng-container body>
+        <ul *ngIf="entryWords.length > 0" class="entry-words__list">
+            <li *ngFor="let word of entryWords; let index = index;" class="entry-words__list-item big-line">
+                <span class="entry-words__word">{{word}}</span>
+                <button (click)="deleteWord(index)" type="button"
+                    [attr.disabled]="isDeleteWordButtonDisabled ? true: null" class="entry-words__delete-word-button"
+                    title="Delete this word">
+                    <fa-icon [icon]="faXmarkCircle" size="sm"></fa-icon>
+                    <span class="invisible-text">Delete This Word</span>
+                </button>
+            </li>
+        </ul>
+        <div class="entry-words__new-word">
+            <app-text-input formControlName="newWord" placeholder="e.g.: patient, patience"
+                [message]="newWordTextInputMessage$ | async"
+                [state]="(newWordTextInputState$ | async) ?? TextInputState.default"
+                [maxlength]="entryWordsValidationValues.wordMaxLength" (onBlur)="markAsTouched()"
+                class="entry-words__new-word-input"></app-text-input>
+            <app-button [state]="ButtonState.conspicuous" (click)="addNewWord()" [disabled]="areNewWordControlsDisabled"
+                class="entry-words__new-word-button">
+                Add
+            </app-button>
+        </div>
+    </ng-container>
+</app-panel>

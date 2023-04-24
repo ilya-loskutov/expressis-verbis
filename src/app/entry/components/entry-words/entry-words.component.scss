@@ -1,0 +1,57 @@
+@use "sass:map";
+@use './device-specific-rules';
+
+.entry-words {
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--small-indent);
+    }
+
+    &__list-item {
+        display: flex;
+        align-items: center;
+        gap: var(--small-indent);
+
+        border-radius: 5px;
+        color: rgb(var(--cold-color-rgb));
+        border: 1px solid rgb(var(--cold-color-rgb));
+    }
+
+    &__word {
+        overflow-wrap: anywhere;
+
+        @supports not (overflow-wrap: anywhere) {
+            word-break: break-word;
+        }
+    }
+
+    &__delete-word-button {
+        cursor: pointer;
+
+        &:disabled {
+            cursor: auto;
+        }
+    }
+
+    &__new-word {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--small-indent);
+        margin-top: var(--small-indent);
+    }
+
+    &__new-word-input {
+        flex-basis: 100%;
+    }
+
+    @media(min-width: map.get(device-specific-rules.$media-breakpoints, 'first')) {
+        &__new-word {
+            flex-wrap: nowrap;
+        }
+
+        &__new-word-input {
+            flex: 1;
+        }
+    }
+}
