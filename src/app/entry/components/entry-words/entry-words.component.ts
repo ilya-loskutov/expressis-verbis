@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, AfterContentInit, OnDestroy, Input } from '@angular/core';
 import { FormControl, FormBuilder, Validators, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { faXmarkCircle } from '@fortawesome/free-regular-svg-icons';
@@ -22,7 +22,7 @@ import { TextInputState } from 'src/app/shared/config/components/text-input';
     }
   ]
 })
-export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class EntryWordsComponent implements AfterContentInit, OnDestroy, ControlValueAccessor {
   faXmarkCircle = faXmarkCircle;
 
   ButtonState = ButtonState;
@@ -34,11 +34,37 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     private formBuilder: FormBuilder
   ) { }
 
-  ngOnInit(): void {
-    console.log('ngOnInit')
-    console.log(this.entryWords);
+  /*
+  We use ngAfterContentInit() and not ngOnInit() in due to writeValue() gets called after the latter
+  (we need entryWords to fulfill these operations)
+  */
+  ngAfterContentInit(): void {
+    this.createNewWordFormControl();
     this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
   }
+
+  private createNewWordFormControl(): void {
+    this.newWordFormControl = this.formBuilder.nonNullable.control<string>(
+      {
+        value: '',
+        disabled: this.shouldNewWordControlsBeDisabled
+      },
+      [
+        onlyWhiteSpacesPreventionValidator,
+        Validators.minLength(entryWordsValidationValues.wordMinLength),
+        Validators.maxLength(entryWordsValidationValues.wordMaxLength),
+      ]
+    );
+  }
+
+  newWordFormControl!: FormControl<string>;
+
+  get shouldNewWordControlsBeDisabled(): boolean {
+    return this.areAllControlsDisabled ||
+      this.entryWords.length === entryWordsValidationValues.wordsMaxLength;
+  }
+
+  entryWords!: string[];
 
   private subscribeToNotificationsOfAttemptToSubmitInvalidForm(): void {
     this.attemptsToSubmitInvalidFormSubscription = this.attemptsToSubmitInvalidForm$.subscribe(() => {
@@ -64,8 +90,6 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     this.entryWords = entryWords;
   }
 
-  entryWords!: string[];
-
   registerOnChange(onChange: (entryWords: string[]) => void) {
     this.onChange = onChange;
   }
@@ -84,29 +108,15 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
 
   private areAllControlsDisabled: boolean = false;
 
-  newWordFormControl: FormControl<string> = this.formBuilder.nonNullable.control<string>(
-    {
-      value: '',
-      disabled: this.areNewWordControlsDisabled
-    },
-    [
-      onlyWhiteSpacesPreventionValidator,
-      Validators.minLength(entryWordsValidationValues.wordMinLength),
-      Validators.maxLength(entryWordsValidationValues.wordMaxLength),
-    ]
-  );
-
-  get areNewWordControlsDisabled(): boolean {
-    return this.areAllControlsDisabled ||
-      this.entryWords.length === entryWordsValidationValues.wordsMaxLength;
-  }
-
   deleteWord(index: number): void {
     assert(this.entryWords[index] !== undefined,
       `There is no word at the ${index} index`);
 
     this.entryWords.splice(index, 1);
     this.onChange(this.entryWords);
+    if (this.newWordFormControl.disabled) {
+      this.newWordFormControl.enable();
+    }
     this.markAsTouched();
   }
 
@@ -134,6 +144,9 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     this.newWordFormControl.reset();
     if (this.entryWords.length === 1) {
       this.updateNewWordTextInputStatus('', TextInputState.default);
+    }
+    if (this.shouldNewWordControlsBeDisabled) {
+      this.newWordFormControl.disable();
     }
   }
 

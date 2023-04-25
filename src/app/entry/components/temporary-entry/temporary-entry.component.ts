@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,9 +16,7 @@ export class TemporaryEntryComponent {
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-  ) { }
-
-  ngOnInit(): void {
+  ) {
     this.activatedRoute.data
       .pipe(
         map(data => data['entry']),
