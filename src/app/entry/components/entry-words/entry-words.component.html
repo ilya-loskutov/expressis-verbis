@@ -16,10 +16,10 @@
             <app-text-input [formControl]="newWordFormControl" placeholder="e.g.: patient, patience"
                 [message]="newWordTextInputMessage$ | async"
                 [state]="(newWordTextInputState$ | async) ?? TextInputState.default"
-                [maxlength]="entryWordsValidationValues.wordMaxLength" (onBlur)="markAsTouched()"
+                [maxlength]="entryWordsValidationValues.wordMaxLength"
                 class="entry-words__new-word-input"></app-text-input>
-            <app-button [state]="ButtonState.conspicuous" (click)="addNewWord()"
-                [disabled]="shouldNewWordControlsBeDisabled" class="entry-words__new-word-button">
+            <app-button [state]="ButtonState.conspicuous" (click)="addNewWord()" [disabled]="inNewWordButtonDisabled"
+                class="entry-words__new-word-button">
                 Add
             </app-button>
         </div>

@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormControl, FormBuilder, Validators, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { faXmarkCircle } from '@fortawesome/free-regular-svg-icons';
@@ -22,7 +22,7 @@ import { TextInputState } from 'src/app/shared/config/components/text-input';
     }
   ]
 })
-export class EntryWordsComponent implements AfterContentInit, OnDestroy, ControlValueAccessor {
+export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAccessor {
   faXmarkCircle = faXmarkCircle;
 
   ButtonState = ButtonState;
@@ -34,21 +34,14 @@ export class EntryWordsComponent implements AfterContentInit, OnDestroy, Control
     private formBuilder: FormBuilder
   ) { }
 
-  /*
-  We use ngAfterContentInit() and not ngOnInit() in due to writeValue() gets called after the latter
-  (we need entryWords to fulfill these operations)
-  */
-  ngAfterContentInit(): void {
+  ngOnInit(): void {
     this.createNewWordFormControl();
     this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
   }
 
   private createNewWordFormControl(): void {
     this.newWordFormControl = this.formBuilder.nonNullable.control<string>(
-      {
-        value: '',
-        disabled: this.shouldNewWordControlsBeDisabled
-      },
+      '', // we do not set a disabled value here as entryWords doesn't exist yet, it will set in setDisabledState()
       [
         onlyWhiteSpacesPreventionValidator,
         Validators.minLength(entryWordsValidationValues.wordMinLength),
@@ -58,11 +51,6 @@ export class EntryWordsComponent implements AfterContentInit, OnDestroy, Control
   }
 
   newWordFormControl!: FormControl<string>;
-
-  get shouldNewWordControlsBeDisabled(): boolean {
-    return this.areAllControlsDisabled ||
-      this.entryWords.length === entryWordsValidationValues.wordsMaxLength;
-  }
 
   entryWords!: string[];
 
@@ -103,10 +91,25 @@ export class EntryWordsComponent implements AfterContentInit, OnDestroy, Control
   private onTouched!: () => void;
 
   setDisabledState(isDisabled: boolean): void {
-    this.areAllControlsDisabled = isDisabled;
+    this.shouldAllControlsBeDisabled = isDisabled;
+    this.setDisabledValueToNewWordFormControl();
   }
 
-  private areAllControlsDisabled: boolean = false;
+  private setDisabledValueToNewWordFormControl(): void {
+    if (this.shouldNewWordFormControlBeDisabled) {
+      this.newWordFormControl.disable();
+    }
+    else {
+      this.newWordFormControl.enable();
+    }
+  }
+
+  get shouldNewWordFormControlBeDisabled(): boolean {
+    return this.shouldAllControlsBeDisabled ||
+      this.entryWords.length === entryWordsValidationValues.wordsMaxLength;
+  }
+
+  private shouldAllControlsBeDisabled: boolean = false;
 
   deleteWord(index: number): void {
     assert(this.entryWords[index] !== undefined,
@@ -114,14 +117,11 @@ export class EntryWordsComponent implements AfterContentInit, OnDestroy, Control
 
     this.entryWords.splice(index, 1);
     this.onChange(this.entryWords);
-    if (this.newWordFormControl.disabled) {
-      this.newWordFormControl.enable();
-    }
     this.markAsTouched();
+    this.setDisabledValueToNewWordFormControl();
   }
 
   markAsTouched(): void {
-    console.log('markAsTouched')
     if (!this.isAnyControlTouched) {
       this.isAnyControlTouched = true;
       this.onTouched();
@@ -131,7 +131,7 @@ export class EntryWordsComponent implements AfterContentInit, OnDestroy, Control
   private isAnyControlTouched: boolean = false;
 
   get isDeleteWordButtonDisabled(): boolean {
-    return this.areAllControlsDisabled;
+    return this.shouldAllControlsBeDisabled;
   }
 
   addNewWord(): void {
@@ -145,9 +145,12 @@ export class EntryWordsComponent implements AfterContentInit, OnDestroy, Control
     if (this.entryWords.length === 1) {
       this.updateNewWordTextInputStatus('', TextInputState.default);
     }
-    if (this.shouldNewWordControlsBeDisabled) {
-      this.newWordFormControl.disable();
-    }
+    this.setDisabledValueToNewWordFormControl();
+  }
+
+  get inNewWordButtonDisabled(): boolean {
+    return this.shouldNewWordFormControlBeDisabled ||
+      !this.newWordFormControl.valid;
   }
 
   ngOnDestroy(): void {
