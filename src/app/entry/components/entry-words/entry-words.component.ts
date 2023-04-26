@@ -35,12 +35,12 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
   ) { }
 
   ngOnInit(): void {
-    this.createNewWordFormControl();
+    this.createnewWordInput();
     this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
   }
 
-  private createNewWordFormControl(): void {
-    this.newWordFormControl = this.formBuilder.nonNullable.control<string>(
+  private createnewWordInput(): void {
+    this.newWordInput = this.formBuilder.nonNullable.control<string>(
       '', // we do not set a disabled value here as entryWords doesn't exist yet, it will set in setDisabledState()
       [
         onlyWhiteSpacesPreventionValidator,
@@ -50,7 +50,7 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     );
   }
 
-  newWordFormControl!: FormControl<string>;
+  newWordInput!: FormControl<string>;
 
   entryWords!: string[];
 
@@ -59,20 +59,20 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
       assert(this.entryWords.length < entryWordsValidationValues.wordsMinLength,
         `The entry's words is of ${this.entryWords.length} length while it is expected to be of less than the min allowable value (${entryWordsValidationValues.wordsMinLength})`);
 
-      this.updateNewWordTextInputStatus('Please add at least one related word', TextInputState.error);
+      this.updateNewWordInputStatus('Please add at least one related word', TextInputState.error);
     });
   }
 
   private attemptsToSubmitInvalidFormSubscription!: Subscription;
   @Input() attemptsToSubmitInvalidForm$!: Observable<void>;
 
-  private updateNewWordTextInputStatus(message: string, state: TextInputState): void {
-    this.newWordTextInputMessage$.next(message);
-    this.newWordTextInputState$.next(state);
+  private updateNewWordInputStatus(message: string, state: TextInputState): void {
+    this.newWordInputMessage$.next(message);
+    this.newWordInputState$.next(state);
   }
 
-  newWordTextInputMessage$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  newWordTextInputState$: BehaviorSubject<TextInputState> = new BehaviorSubject<TextInputState>(TextInputState.default);
+  newWordInputMessage$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  newWordInputState$: BehaviorSubject<TextInputState> = new BehaviorSubject<TextInputState>(TextInputState.default);
 
   writeValue(entryWords: string[]): void {
     this.entryWords = entryWords;
@@ -92,19 +92,19 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
 
   setDisabledState(isDisabled: boolean): void {
     this.shouldAllControlsBeDisabled = isDisabled;
-    this.setDisabledValueToNewWordFormControl();
+    this.setDisabledValueTonewWordInput();
   }
 
-  private setDisabledValueToNewWordFormControl(): void {
-    if (this.shouldNewWordFormControlBeDisabled) {
-      this.newWordFormControl.disable();
+  private setDisabledValueTonewWordInput(): void {
+    if (this.shouldnewWordInputBeDisabled) {
+      this.newWordInput.disable();
     }
     else {
-      this.newWordFormControl.enable();
+      this.newWordInput.enable();
     }
   }
 
-  get shouldNewWordFormControlBeDisabled(): boolean {
+  get shouldnewWordInputBeDisabled(): boolean {
     return this.shouldAllControlsBeDisabled ||
       this.entryWords.length === entryWordsValidationValues.wordsMaxLength;
   }
@@ -118,7 +118,7 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     this.entryWords.splice(index, 1);
     this.onChange(this.entryWords);
     this.markAsTouched();
-    this.setDisabledValueToNewWordFormControl();
+    this.setDisabledValueTonewWordInput();
   }
 
   markAsTouched(): void {
@@ -137,20 +137,20 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
   addNewWord(): void {
     assert(this.entryWords.length < entryWordsValidationValues.wordsMaxLength,
       `The entry's words of ${this.entryWords.length} length while it is expected to be of less than the max allowable value (${entryWordsValidationValues.wordsMaxLength})`);
-    assert(this.newWordFormControl.valid, 'The new word form control is invalid');
+    assert(this.newWordInput.valid, 'The new word form control is invalid');
 
-    this.entryWords.push(this.newWordFormControl.value.trim());
+    this.entryWords.push(this.newWordInput.value.trim());
     this.onChange(this.entryWords);
-    this.newWordFormControl.reset();
+    this.newWordInput.reset();
     if (this.entryWords.length === 1) {
-      this.updateNewWordTextInputStatus('', TextInputState.default);
+      this.updateNewWordInputStatus('', TextInputState.default);
     }
-    this.setDisabledValueToNewWordFormControl();
+    this.setDisabledValueTonewWordInput();
   }
 
   get inNewWordButtonDisabled(): boolean {
-    return this.shouldNewWordFormControlBeDisabled ||
-      !this.newWordFormControl.valid;
+    return this.shouldnewWordInputBeDisabled ||
+      !this.newWordInput.valid;
   }
 
   ngOnDestroy(): void {
