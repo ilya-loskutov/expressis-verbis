@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -64,4 +64,11 @@ export class TextInputComponent implements ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
+
+  onBlur(): void {
+    this.onTouched!();
+    this.blur.emit();
+  }
+
+  @Output() blur = new EventEmitter<void>();
 }
