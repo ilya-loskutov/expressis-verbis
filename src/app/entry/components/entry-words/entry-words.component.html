@@ -13,9 +13,9 @@
             </li>
         </ul>
         <div class="entry-words__new-word">
-            <app-text-input [formControl]="newWordFormControl" placeholder="e.g.: patient, patience"
-                [message]="newWordTextInputMessage$ | async"
-                [state]="(newWordTextInputState$ | async) ?? TextInputState.default"
+            <app-text-input [formControl]="newWordInput" placeholder="e.g.: patient, patience"
+                [message]="newWordInputMessage$ | async"
+                [state]="(newWordInputState$ | async) ?? TextInputState.default"
                 [maxlength]="entryWordsValidationValues.wordMaxLength"
                 class="entry-words__new-word-input"></app-text-input>
             <app-button [state]="ButtonState.conspicuous" (click)="addNewWord()" [disabled]="inNewWordButtonDisabled"
