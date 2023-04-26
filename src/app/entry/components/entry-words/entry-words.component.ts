@@ -153,6 +153,10 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
       !this.newWordInput.valid;
   }
 
+  onNewWordInputBlur(): void {
+    this.markAsTouched();
+  }
+
   ngOnDestroy(): void {
     this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
   }
