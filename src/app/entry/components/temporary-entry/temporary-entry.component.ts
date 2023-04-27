@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { map, Subject } from 'rxjs';
 
-import { Entry } from '../../models/entry';
-import { entryWordsValidator } from '../../services/entry-words-validator';
+import { Entry, Meaning } from '../../models/entry';
+import { entryWordsValidator, entryMeaningsValidator } from '../../services/entry-form-control-validators';
 
 @Component({
   selector: 'app-temporary-entry',
@@ -23,15 +23,21 @@ export class TemporaryEntryComponent {
       )
       .subscribe((entry: Entry) => {
         this.form.controls.words.setValue(entry.words);
+        this.form.controls.meanings.setValue(entry.meanings)
       });
   }
 
   form: FormGroup<{
-    words: FormControl<string[]>
+    words: FormControl<string[]>,
+    meanings: FormControl<Meaning[]>
   }> = this.formBuilder.nonNullable.group({
     words: [
       [] as string[],
       [entryWordsValidator]
+    ],
+    meanings: [
+      [] as Meaning[],
+      [entryMeaningsValidator]
     ]
   });
 
