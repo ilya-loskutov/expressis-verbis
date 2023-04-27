@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+import { Subscription, Observable } from 'rxjs';
 
 import { Meaning } from '../../models/entry';
 
@@ -15,7 +17,19 @@ import { Meaning } from '../../models/entry';
     }
   ]
 })
-export class EntryMeaningsComponent implements ControlValueAccessor {
+export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  ngOnInit(): void {
+    this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
+  }
+
+  private subscribeToNotificationsOfAttemptToSubmitInvalidForm(): void {
+    this.attemptsToSubmitInvalidFormSubscription = this.attemptsToSubmitInvalidForm$.subscribe(() => {
+    });
+  }
+
+  private attemptsToSubmitInvalidFormSubscription!: Subscription;
+  @Input() attemptsToSubmitInvalidForm$!: Observable<void>;
+
   writeValue(entryMeanings: Meaning[]): void {
     this.entryMeanings = entryMeanings;
   }
@@ -39,4 +53,8 @@ export class EntryMeaningsComponent implements ControlValueAccessor {
   }
 
   shouldAllControlsBeDisabled: boolean = false;
+
+  ngOnDestroy(): void {
+    this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
+  }
 }
