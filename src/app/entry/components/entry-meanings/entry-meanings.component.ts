@@ -39,11 +39,11 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
 
   entryMeanings!: Meaning[];
 
-  registerOnChange(onChange: (entryWords: string[]) => void) {
+  registerOnChange(onChange: (entryMeanings: Meaning[]) => void) {
     this.onChange = onChange;
   }
 
-  private onChange!: (entryWords: string[]) => void;
+  private onChange!: (entryMeanings: Meaning[]) => void;
 
   registerOnTouched(onTouched: () => void) {
     this.onTouched = onTouched;
