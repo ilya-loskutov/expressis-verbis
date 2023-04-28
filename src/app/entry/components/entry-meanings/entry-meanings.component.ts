@@ -6,6 +6,7 @@ import { Subscription, Observable } from 'rxjs';
 import { Meaning } from '../../models/entry';
 import { entryMeaningsValidationValues } from '../../config/entry-validation-values';
 import { ButtonState } from 'src/app/shared/config/components/button';
+import { assert } from 'src/app/shared/utils/assert/assert';
 
 @Component({
   selector: 'app-entry-meanings',
@@ -58,8 +59,60 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
 
   shouldAllControlsBeDisabled: boolean = false;
 
-  getMeaningState(meaning: Meaning): 'view' {
+  getMeaningState(meaning: Meaning): 'view' | 'deleted' {
+    if (this.deletedMeanings.has(meaning)) {
+      return 'deleted';
+    }
     return 'view';
+  }
+
+  private deletedMeanings: Set<Meaning> = new Set<Meaning>();
+
+  deleteMeaning(meaning: Meaning) {
+    assert(!this.deletedMeanings.has(meaning),
+      `This meaning is already deleted`);
+
+    this.deletedMeanings.add(meaning);
+    this.markAsTouched();
+    this.notifyOfChange();
+  }
+
+  private markAsTouched(): void {
+    if (!this.isAnyControlTouched) {
+      this.isAnyControlTouched = true;
+      this.onTouched();
+    }
+  }
+
+  private isAnyControlTouched: boolean = false;
+
+  private notifyOfChange(): void {
+    this.onChange(this.getRemainedMeanings());
+  }
+
+  private getRemainedMeanings(): Meaning[] {
+    return this.entryMeanings.filter(
+      (meaning: Meaning) => !this.deletedMeanings.has(meaning)
+    );
+  }
+
+  get isDeleteMeaningButtonDisabled(): boolean {
+    return this.shouldAllControlsBeDisabled;
+  }
+
+  restoreMeaning(meaning: Meaning): void {
+    assert(this.deletedMeanings.has(meaning),
+      `This meaning is not deleted`);
+    assert(this.getRemainedMeanings().length < entryMeaningsValidationValues.meaningsMaxLength,
+      `The length of the remained meanings is ${this.getRemainedMeanings().length}. Can't restore yet another one as the max allowable value is ${entryMeaningsValidationValues.meaningsMaxLength}`);
+
+    this.deletedMeanings.delete(meaning);
+    this.notifyOfChange();
+  }
+
+  get isRestoreMeaningButtonDisabled(): boolean {
+    return this.shouldAllControlsBeDisabled ||
+      this.getRemainedMeanings().length === entryMeaningsValidationValues.meaningsMaxLength;
   }
 
   ngOnDestroy(): void {

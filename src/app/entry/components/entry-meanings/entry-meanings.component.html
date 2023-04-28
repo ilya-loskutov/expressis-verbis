@@ -20,8 +20,14 @@
                         </ul>
                         <div class="entry-meanings__meaning-actions">
                             <app-button [state]="ButtonState.success" [size]="'small'">Edit</app-button>
-                            <app-button [state]="ButtonState.error" [size]="'small'">Delete</app-button>
+                            <app-button (click)="deleteMeaning(meaning)" [disabled]="isDeleteMeaningButtonDisabled"
+                                [state]="ButtonState.error" [size]="'small'">Delete</app-button>
                         </div>
+                    </li>
+                    <li *ngSwitchCase="'deleted'" class="entry-meanings__meaning entry-meanings__meaning_state_deleted">
+                        <span>This meaning has been deleted</span>
+                        <app-button (click)="restoreMeaning(meaning)" [disabled]="isRestoreMeaningButtonDisabled"
+                            [size]="'small'">Restore</app-button>
                     </li>
                 </ng-container>
             </ng-container>

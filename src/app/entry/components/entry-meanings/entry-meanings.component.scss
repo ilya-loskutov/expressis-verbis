@@ -9,6 +9,14 @@
         &+& {
             margin-top: var(--medium-indent);
         }
+
+        &_state_deleted {
+            display: flex;
+            gap: var(--small-indent);
+
+            font-style: italic;
+            font-weight: bolder;
+        }
     }
 
     &__meaning-definition {
