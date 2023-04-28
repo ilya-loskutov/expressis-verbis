@@ -2,8 +2,8 @@
     <ng-container title>Definitions & Examples</ng-container>
     <ng-container body>
         <ul *ngIf="entryMeanings.length > 0" class="entry-meanings__list">
-            <ng-container *ngFor="let meaning of entryMeanings; let index = index;">
-                <ng-container [ngSwitch]="getMeaningState(index)">
+            <ng-container *ngFor="let meaning of entryMeanings">
+                <ng-container [ngSwitch]="getMeaningState(meaning)">
                     <li *ngSwitchCase="'view'" class="entry-meanings__meaning entry-meanings__meaning_state_view">
                         <p class="entry-meanings__meaning-definition">
                             <span class="entry-meanings__meaning-definition-initial-icon">

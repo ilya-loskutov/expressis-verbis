@@ -57,7 +57,7 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
 
   shouldAllControlsBeDisabled: boolean = false;
 
-  getMeaningState(index: number): 'view' {
+  getMeaningState(meaning: Meaning): 'view' {
     return 'view';
   }
 
