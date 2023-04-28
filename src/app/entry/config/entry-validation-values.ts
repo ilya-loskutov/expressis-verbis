@@ -15,10 +15,12 @@ export const entryWordsValidationValues = {
     wordMaxLength: wordSchema.maxLength as number,
 }
 
-export const entryPropertiesValidationValues = {
+export const entryMeaningsValidationValues = {
+    meaningsMinLength: 0,
     meaningsMaxLength: entrySchema.properties.meanings.maxItems as number,
     definitionMinLength: meaningSchema.definition.minLength as number,
     definitionMaxLength: meaningSchema.definition.maxLength as number,
+    examplesMinLength: 0,
     examplesMaxLength: meaningSchema.examples.maxItems as number,
     exampleMinLength: exampleSchema.minLength as number,
     exampleMaxLength: exampleSchema.maxLength as number
