@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 
 import { Meaning } from '../../models/entry';
+import { ButtonState } from 'src/app/shared/config/components/button';
 
 @Component({
   selector: 'app-entry-meanings',
@@ -18,6 +19,8 @@ import { Meaning } from '../../models/entry';
   ]
 })
 export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAccessor {
+  ButtonState = ButtonState;
+
   ngOnInit(): void {
     this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
   }
@@ -53,6 +56,10 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   shouldAllControlsBeDisabled: boolean = false;
+
+  getMeaningState(index: number): 'view' {
+    return 'view';
+  }
 
   ngOnDestroy(): void {
     this.attemptsToSubmitInvalidFormSubscription.unsubscribe();

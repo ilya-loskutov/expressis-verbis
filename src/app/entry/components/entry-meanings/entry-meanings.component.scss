@@ -1,0 +1,32 @@
+.entry-meanings {
+    &__meaning-list {
+        margin-bottom: var(--medium-indent);
+    }
+
+    &__meaning {
+        display: block;
+
+        &+& {
+            margin-top: var(--medium-indent);
+        }
+    }
+
+    &__meaning-definition {
+        margin-bottom: var(--small-indent);
+
+        font-weight: bolder;
+    }
+
+    &__meaning-definition-initial-icon {
+        margin-right: var(--small-indent);
+    }
+
+    &__meaning-examples-list {
+        margin-bottom: var(--small-indent);
+    }
+
+    &__meaning-actions {
+        display: flex;
+        gap: var(--small-indent);
+    }
+}

@@ -1,1 +1,30 @@
-<p>entry-meanings works!</p>
+<app-panel class="entry-meanings">
+    <ng-container title>Definitions & Examples</ng-container>
+    <ng-container body>
+        <ul *ngIf="entryMeanings.length > 0" class="entry-meanings__list">
+            <ng-container *ngFor="let meaning of entryMeanings; let index = index;">
+                <ng-container [ngSwitch]="getMeaningState(index)">
+                    <li *ngSwitchCase="'view'" class="entry-meanings__meaning entry-meanings__meaning_state_view">
+                        <p class="entry-meanings__meaning-definition">
+                            <span class="entry-meanings__meaning-definition-initial-icon">
+                                📝
+                            </span>
+                            {{meaning.definition}}
+                        </p>
+                        <ul *ngIf="meaning.examples.length > 0" class="entry-meanings__meaning-examples-list">
+                            <ng-container *ngFor="let example of meaning.examples">
+                                <li class="entry-meanings__meaning-example">
+                                    {{example}}
+                                </li>
+                            </ng-container>
+                        </ul>
+                        <div class="entry-meanings__meaning-actions">
+                            <app-button [state]="ButtonState.success" [size]="'small'">Edit</app-button>
+                            <app-button [state]="ButtonState.error" [size]="'small'">Delete</app-button>
+                        </div>
+                    </li>
+                </ng-container>
+            </ng-container>
+        </ul>
+    </ng-container>
+</app-panel>
