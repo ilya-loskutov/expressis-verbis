@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 
 import { Meaning } from '../../models/entry';
+import { entryMeaningsValidationValues } from '../../config/entry-validation-values';
 import { ButtonState } from 'src/app/shared/config/components/button';
 
 @Component({
