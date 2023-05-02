@@ -1,14 +1,14 @@
 .entry-meanings {
-    &__meaning-list {
-        margin-bottom: var(--medium-indent);
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--medium-indent);
     }
 
     &__meaning {
-        display: block;
-
-        &+& {
-            margin-top: var(--medium-indent);
-        }
+        display: flex;
+        flex-direction: column;
+        gap: var(--small-indent);
 
         &_state_deleted {
             display: flex;
@@ -20,17 +20,11 @@
     }
 
     &__meaning-definition {
-        margin-bottom: var(--small-indent);
-
         font-weight: bolder;
     }
 
     &__meaning-definition-initial-icon {
         margin-right: var(--small-indent);
-    }
-
-    &__meaning-examples-list {
-        margin-bottom: var(--small-indent);
     }
 
     &__meaning-actions {
