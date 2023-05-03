@@ -11,19 +11,21 @@
                             </span>
                             {{meaning.definition}}
                         </p>
-                        <ul *ngIf="meaning.examples.length > 0" class="entry-meanings__meaning-examples-list">
-                            <ng-container *ngFor="let example of meaning.examples">
-                                <li class="entry-meanings__meaning-example">
-                                    {{example}}
-                                </li>
-                            </ng-container>
-                        </ul>
-                        <div class="entry-meanings__meaning-actions">
+                        <div class="entry-meanings__meaning-examples">
+                            <ul *ngIf="meaning.examples.length > 0" class="entry-meanings__meaning-example-list">
+                                <ng-container *ngFor="let example of meaning.examples">
+                                    <li class="entry-meanings__meaning-example">
+                                        {{example}}
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                        <p class="entry-meanings__meaning-actions">
                             <app-button (click)="editMeaning(meaning)" [disabled]="isEditButtonButtonDisabled"
                                 [state]="ButtonState.success" [size]="'small'">Edit</app-button>
                             <app-button (click)="deleteMeaning(meaning)" [disabled]="isDeleteMeaningButtonDisabled"
                                 [state]="ButtonState.error" [size]="'small'">Delete</app-button>
-                        </div>
+                        </p>
                     </li>
                     <li *ngSwitchCase="'being-edited'"
                         class="entry-meanings__meaning entry-meanings__meaning_state_being-edited">
@@ -73,8 +75,10 @@
                     </li>
                     <li *ngSwitchCase="'deleted'" class="entry-meanings__meaning entry-meanings__meaning_state_deleted">
                         <span>This meaning has been deleted</span>
-                        <app-button (click)="restoreMeaning(meaning)" [disabled]="isRestoreMeaningButtonDisabled"
-                            [size]="'small'">Restore</app-button>
+                        <div class="entry-meanings__meaning-actions">
+                            <app-button (click)="restoreMeaning(meaning)" [disabled]="isRestoreMeaningButtonDisabled"
+                                [size]="'small'">Restore</app-button>
+                        </div>
                     </li>
                 </ng-container>
             </ng-container>
