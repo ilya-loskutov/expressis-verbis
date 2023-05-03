@@ -146,10 +146,10 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
 
     this.deletedMeanings.add(meaning);
     this.markAsTouched();
-    this.notifyOfChange();
+    this.notifyOfChanges();
   }
 
-  private notifyOfChange(): void {
+  private notifyOfChanges(): void {
     this.onChange(this.getRemainedMeanings());
   }
 
@@ -177,7 +177,7 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
       `The length of the remained meanings is ${this.getRemainedMeanings().length}. Can't restore yet another one as the max allowable value is ${entryMeaningsValidationValues.meaningsMaxLength}`);
 
     this.deletedMeanings.delete(meaning);
-    this.notifyOfChange();
+    this.notifyOfChanges();
   }
 
   get isRestoreMeaningButtonDisabled(): boolean {
@@ -206,7 +206,7 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
     const meaningIndex = this.entryMeanings.indexOf(meaning);
     this.entryMeanings[meaningIndex] = meaningFormControl.value as Meaning;
     this.meaningsBeingEdited.delete(meaning);
-    this.notifyOfChange();
+    this.notifyOfChanges();
   }
 
   isAcceptMeaningChangesButtonDisabled(meaningFormControl: EntryMeaningFormControl): boolean {
