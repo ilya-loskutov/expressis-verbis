@@ -21,7 +21,7 @@
                             </ul>
                         </div>
                         <p class="entry-meanings__meaning-actions">
-                            <app-button (click)="editMeaning(meaning)" [disabled]="isEditButtonButtonDisabled"
+                            <app-button (click)="editMeaning(meaning)" [disabled]="isEditButtonDisabled"
                                 [state]="ButtonState.success" [size]="'small'">Edit</app-button>
                             <app-button (click)="deleteMeaning(meaning)" [disabled]="isDeleteMeaningButtonDisabled"
                                 [state]="ButtonState.error" [size]="'small'">Delete</app-button>

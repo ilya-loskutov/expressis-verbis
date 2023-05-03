@@ -134,7 +134,7 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
 
   private isAnyControlTouched: boolean = false;
 
-  get isEditButtonButtonDisabled(): boolean {
+  get isEditButtonDisabled(): boolean {
     return this.shouldAllControlsBeDisabled;
   }
 
