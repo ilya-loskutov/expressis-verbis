@@ -5,6 +5,7 @@ import { Subscription, Observable } from 'rxjs';
 import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Meaning } from '../../models/entry';
+import { EntryFactory } from '../../services/entry.factory';
 import { entryMeaningsValidationValues } from '../../config/entry-validation-values';
 import { EntryMeaningFormControl } from '../../models/entry-form';
 import { ButtonState } from 'src/app/shared/config/components/button';
@@ -31,7 +32,8 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
   entryMeaningsValidationValues = entryMeaningsValidationValues;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private entryFactory: EntryFactory
   ) { }
 
   ngOnInit(): void {
@@ -218,6 +220,34 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
       `This meaning is not being edited`);
 
     this.meaningsBeingEdited.delete(meaning);
+    if (this.isMeaningNew(meaning)) {
+      this.deleteMeaningPermanently(meaning);
+      this.notifyOfChanges();
+    }
+  }
+
+  private isMeaningNew(meaning: Meaning): boolean {
+    return meaning.definition.length === 0 &&
+      meaning.examples.length === 0;
+  }
+
+  private deleteMeaningPermanently(meaning: Meaning): void {
+    const meaningIndex = this.entryMeanings.indexOf(meaning);
+    this.entryMeanings.splice(meaningIndex, 1);
+  }
+
+  addMeaning(): void {
+    assert(this.getRemainedMeanings().length < entryMeaningsValidationValues.meaningsMaxLength,
+      `The length of the remained meanings is ${this.getRemainedMeanings().length}. Can't add yet another one as the max allowable value is ${entryMeaningsValidationValues.meaningsMaxLength}`);
+
+    const newMeaning = this.entryFactory.createMeaning();
+    this.entryMeanings.push(newMeaning);
+    this.editMeaning(newMeaning);
+  }
+
+  get isAddMeaningButtonDisabled(): boolean {
+    return this.shouldAllControlsBeDisabled ||
+      this.getRemainedMeanings().length === entryMeaningsValidationValues.meaningsMaxLength;
   }
 
   ngOnDestroy(): void {

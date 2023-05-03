@@ -83,5 +83,11 @@
                 </ng-container>
             </ng-container>
         </ul>
+        <p class="entry-meanings__new-meaning">
+            <app-button (click)="addMeaning()" [disabled]="isAddMeaningButtonDisabled" [state]="ButtonState.conspicuous"
+                [size]="'small'">
+                Add a definition with examples
+            </app-button>
+        </p>
     </ng-container>
 </app-panel>
