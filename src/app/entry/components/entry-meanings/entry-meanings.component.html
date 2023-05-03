@@ -19,10 +19,57 @@
                             </ng-container>
                         </ul>
                         <div class="entry-meanings__meaning-actions">
-                            <app-button [state]="ButtonState.success" [size]="'small'">Edit</app-button>
+                            <app-button (click)="editMeaning(meaning)" [disabled]="isEditButtonButtonDisabled"
+                                [state]="ButtonState.success" [size]="'small'">Edit</app-button>
                             <app-button (click)="deleteMeaning(meaning)" [disabled]="isDeleteMeaningButtonDisabled"
                                 [state]="ButtonState.error" [size]="'small'">Delete</app-button>
                         </div>
+                    </li>
+                    <li *ngSwitchCase="'being-edited'"
+                        class="entry-meanings__meaning entry-meanings__meaning_state_being-edited">
+                        <ng-container *ngIf="getFormControlForMeaningBeingEdited(meaning) as meaningFormControl">
+                            <p class="entry-meanings__meaning-definition">
+                                <label for="definition"
+                                    class="entry-meanings__meaning-definition-label">Definition</label>
+                                <app-text-input [formControl]="meaningFormControl.controls.definition"
+                                    [maxlength]="entryMeaningsValidationValues.definitionMaxLength" [isMultiline]="true"
+                                    id="definition"></app-text-input>
+                            </p>
+                            <div class="entry-meanings__meaning-examples">
+                                <label for="examples" class="entry-meanings__meaning-examples-label">Examples</label>
+                                <ul id="examples" class="entry-meanings__meaning-example-list">
+                                    <ng-container
+                                        *ngFor="let exampleFormControl of meaningFormControl.controls.examples.controls; let exampleIndex = index;">
+                                        <li class="entry-meanings__meaning-example">
+                                            <app-text-input [formControl]="exampleFormControl"
+                                                [maxlength]="entryMeaningsValidationValues.exampleMaxLength"
+                                                [isMultiline]="true"
+                                                class="entry-meanings__entry-meaning-example-input"></app-text-input>
+                                            <app-button
+                                                (click)="deleteMeaningExampleFormControl(meaningFormControl, exampleIndex)"
+                                                [size]="'small'" title="Delete this example"
+                                                class="entry-meanings__delete-meaning-example-button">
+                                                <fa-icon [icon]="faXmarkCircle" size="sm"></fa-icon>
+                                                <span class="invisible-text">Delete This Example</span>
+                                            </app-button>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                                <app-button (click)="addMeaningExampleFormControl(meaningFormControl)"
+                                    [disabled]="isAddMeaningExampleButtonDisabled(meaningFormControl)"
+                                    [state]="ButtonState.conspicuous" [size]="'small'"
+                                    class="entry-meanings__add-meaning-example-button">
+                                    Add an example
+                                </app-button>
+                            </div>
+                            <p class="entry-meanings__meaning-actions">
+                                <app-button (click)="acceptMeaningChanges(meaning, meaningFormControl)"
+                                    [disabled]="isAcceptMeaningChangesButtonDisabled(meaningFormControl)"
+                                    [state]="ButtonState.success" [size]="'small'">Ok</app-button>
+                                <app-button (click)="discardMeaningChanges(meaning)" [state]="ButtonState.error"
+                                    [size]="'small'">Discard</app-button>
+                            </p>
+                        </ng-container>
                     </li>
                     <li *ngSwitchCase="'deleted'" class="entry-meanings__meaning entry-meanings__meaning_state_deleted">
                         <span>This meaning has been deleted</span>

@@ -1,4 +1,6 @@
 .entry-meanings {
+    $entry-meanings: &;
+
     &__list {
         display: flex;
         flex-direction: column;
@@ -11,11 +13,35 @@
         gap: var(--small-indent);
 
         &_state_deleted {
-            display: flex;
-            gap: var(--small-indent);
+            flex-direction: row;
 
             font-style: italic;
             font-weight: bolder;
+        }
+
+        &_state_being-edited {
+            justify-content: center;
+
+            #{$entry-meanings}__meaning-example-list {
+                display: flex;
+                flex-direction: column;
+                gap: var(--small-indent);
+                margin-bottom: var(--small-indent);
+            }
+
+            #{$entry-meanings}__meaning-example {
+                display: flex;
+                align-items: center;
+                gap: var(--small-indent);
+            }
+
+            #{$entry-meanings}__entry-meaning-example-input {
+                flex: 1;
+            }
+
+            #{$entry-meanings}__meaning-actions {
+                justify-content: center;
+            }
         }
     }
 
@@ -23,8 +49,23 @@
         font-weight: bolder;
     }
 
+    &__meaning-definition-label {
+        display: block;
+        margin-bottom: calc(var(--small-indent)/2);
+
+        text-align: center;
+    }
+
     &__meaning-definition-initial-icon {
         margin-right: var(--small-indent);
+    }
+
+    &__meaning-examples-label {
+        display: block;
+        margin-bottom: calc(var(--small-indent)/2);
+
+        font-weight: bolder;
+        text-align: center;
     }
 
     &__meaning-actions {

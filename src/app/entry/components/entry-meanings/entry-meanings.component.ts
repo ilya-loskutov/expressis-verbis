@@ -1,11 +1,14 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 
 import { Subscription, Observable } from 'rxjs';
+import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Meaning } from '../../models/entry';
 import { entryMeaningsValidationValues } from '../../config/entry-validation-values';
+import { EntryMeaningFormControl } from '../../models/entry-form';
 import { ButtonState } from 'src/app/shared/config/components/button';
+import { onlyWhiteSpacesPreventionValidator } from 'src/app/shared/services/form/form-control-validators';
 import { assert } from 'src/app/shared/utils/assert/assert';
 
 @Component({
@@ -22,6 +25,14 @@ import { assert } from 'src/app/shared/utils/assert/assert';
 })
 export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAccessor {
   ButtonState = ButtonState;
+
+  faXmarkCircle = faXmarkCircle;
+
+  entryMeaningsValidationValues = entryMeaningsValidationValues;
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
     this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
@@ -59,22 +70,59 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
 
   shouldAllControlsBeDisabled: boolean = false;
 
-  getMeaningState(meaning: Meaning): 'view' | 'deleted' {
+  getMeaningState(meaning: Meaning): 'view' | 'being-edited' | 'deleted' {
+    if (this.meaningsBeingEdited.has(meaning)) {
+      return 'being-edited';
+    }
     if (this.deletedMeanings.has(meaning)) {
       return 'deleted';
     }
     return 'view';
   }
 
+  private meaningsBeingEdited: Map<Meaning, EntryMeaningFormControl> = new Map<Meaning, EntryMeaningFormControl>();
+
   private deletedMeanings: Set<Meaning> = new Set<Meaning>();
 
-  deleteMeaning(meaning: Meaning) {
+  editMeaning(meaning: Meaning): void {
+    assert(!this.meaningsBeingEdited.has(meaning),
+      `This meaning is already being edited`);
     assert(!this.deletedMeanings.has(meaning),
-      `This meaning is already deleted`);
+      `This meaning has been deleted`);
 
-    this.deletedMeanings.add(meaning);
+    this.meaningsBeingEdited.set(meaning, this.createMeaningFormControl(meaning));
     this.markAsTouched();
-    this.notifyOfChange();
+  }
+
+  private createMeaningFormControl(meaning: Meaning): EntryMeaningFormControl {
+    return this.formBuilder.nonNullable.group({
+      definition: [
+        meaning.definition,
+        [
+          onlyWhiteSpacesPreventionValidator,
+          Validators.min(entryMeaningsValidationValues.definitionMinLength),
+          Validators.max(entryMeaningsValidationValues.definitionMaxLength)
+        ]
+      ],
+      examples: this.formBuilder.nonNullable.array(
+        meaning.examples.map(example => this.createMeaningExampleFormControl(example)),
+        [
+          Validators.min(entryMeaningsValidationValues.examplesMinLength),
+          Validators.max(entryMeaningsValidationValues.examplesMaxLength)
+        ]
+      )
+    });
+  }
+
+  private createMeaningExampleFormControl(example: string): FormControl<string> {
+    return this.formBuilder.nonNullable.control(
+      example,
+      [
+        onlyWhiteSpacesPreventionValidator,
+        Validators.min(entryMeaningsValidationValues.exampleMinLength),
+        Validators.max(entryMeaningsValidationValues.exampleMaxLength)
+      ]
+    )
   }
 
   private markAsTouched(): void {
@@ -85,6 +133,21 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
   }
 
   private isAnyControlTouched: boolean = false;
+
+  get isEditButtonButtonDisabled(): boolean {
+    return this.shouldAllControlsBeDisabled;
+  }
+
+  deleteMeaning(meaning: Meaning) {
+    assert(!this.deletedMeanings.has(meaning),
+      `This meaning is already deleted`);
+    assert(!this.meaningsBeingEdited.has(meaning),
+      `This meaning is for now being edited`);
+
+    this.deletedMeanings.add(meaning);
+    this.markAsTouched();
+    this.notifyOfChange();
+  }
 
   private notifyOfChange(): void {
     this.onChange(this.getRemainedMeanings());
@@ -100,6 +163,13 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
     return this.shouldAllControlsBeDisabled;
   }
 
+  getFormControlForMeaningBeingEdited(meaning: Meaning): EntryMeaningFormControl {
+    assert(this.meaningsBeingEdited.has(meaning),
+      `This meaning is not being edited`);
+
+    return this.meaningsBeingEdited.get(meaning)!;
+  }
+
   restoreMeaning(meaning: Meaning): void {
     assert(this.deletedMeanings.has(meaning),
       `This meaning is not deleted`);
@@ -113,6 +183,41 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
   get isRestoreMeaningButtonDisabled(): boolean {
     return this.shouldAllControlsBeDisabled ||
       this.getRemainedMeanings().length === entryMeaningsValidationValues.meaningsMaxLength;
+  }
+
+  deleteMeaningExampleFormControl(meaningFormControl: EntryMeaningFormControl, exampleIndex: number): void {
+    meaningFormControl.controls.examples.removeAt(exampleIndex);
+  }
+
+  addMeaningExampleFormControl(meaningFormControl: EntryMeaningFormControl): void {
+    meaningFormControl.controls.examples.push(this.createMeaningExampleFormControl(''));
+  }
+
+  isAddMeaningExampleButtonDisabled(meaningFormControl: EntryMeaningFormControl): boolean {
+    return meaningFormControl.controls.examples.length === entryMeaningsValidationValues.examplesMaxLength;
+  }
+
+  acceptMeaningChanges(meaning: Meaning, meaningFormControl: EntryMeaningFormControl): void {
+    assert(this.meaningsBeingEdited.has(meaning),
+      `This meaning is not being edited`);
+    assert(meaningFormControl.valid,
+      `The corresponding meaning form control is invalid: ${JSON.stringify(meaningFormControl.errors)}`);
+
+    const meaningIndex = this.entryMeanings.indexOf(meaning);
+    this.entryMeanings[meaningIndex] = meaningFormControl.value as Meaning;
+    this.meaningsBeingEdited.delete(meaning);
+    this.notifyOfChange();
+  }
+
+  isAcceptMeaningChangesButtonDisabled(meaningFormControl: EntryMeaningFormControl): boolean {
+    return meaningFormControl.invalid;
+  }
+
+  discardMeaningChanges(meaning: Meaning): void {
+    assert(this.meaningsBeingEdited.has(meaning),
+      `This meaning is not being edited`);
+
+    this.meaningsBeingEdited.delete(meaning);
   }
 
   ngOnDestroy(): void {
