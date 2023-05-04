@@ -32,3 +32,8 @@ export const entryPropertiesValidationValues = {
     exampleMinLength: exampleSchema.minLength as number,
     exampleMaxLength: exampleSchema.maxLength as number
 }
+
+export type EntryMeaningFormControl = FormGroup<{
+    definition: FormControl<string>,
+    examples: FormArray<FormControl<string>>
+}>;

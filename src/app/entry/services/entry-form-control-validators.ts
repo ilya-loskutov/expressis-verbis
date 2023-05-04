@@ -20,3 +20,7 @@ export function entryWordsValidator(control: AbstractControl): ValidationErrors 
     }
     return null;
 }
+
+export function entryMeaningsValidator(control: AbstractControl): ValidationErrors | null {
+    return null;
+}

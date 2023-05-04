@@ -1,0 +1,93 @@
+<app-panel class="entry-meanings">
+    <ng-container title>Definitions & Examples</ng-container>
+    <ng-container body>
+        <ul *ngIf="entryMeanings.length > 0" class="entry-meanings__list">
+            <ng-container *ngFor="let meaning of entryMeanings">
+                <ng-container [ngSwitch]="getMeaningState(meaning)">
+                    <li *ngSwitchCase="'view'" class="entry-meanings__meaning entry-meanings__meaning_state_view">
+                        <p class="entry-meanings__meaning-definition">
+                            <span class="entry-meanings__meaning-definition-initial-icon">
+                                📝
+                            </span>
+                            {{meaning.definition}}
+                        </p>
+                        <div class="entry-meanings__meaning-examples">
+                            <ul *ngIf="meaning.examples.length > 0" class="entry-meanings__meaning-example-list">
+                                <ng-container *ngFor="let example of meaning.examples">
+                                    <li class="entry-meanings__meaning-example">
+                                        {{example}}
+                                    </li>
+                                </ng-container>
+                            </ul>
+                        </div>
+                        <p class="entry-meanings__meaning-actions">
+                            <app-button (click)="editMeaning(meaning)" [disabled]="isEditButtonDisabled"
+                                [state]="ButtonState.success" [size]="'small'">Edit</app-button>
+                            <app-button (click)="deleteMeaning(meaning)" [disabled]="isDeleteMeaningButtonDisabled"
+                                [state]="ButtonState.error" [size]="'small'">Delete</app-button>
+                        </p>
+                    </li>
+                    <li *ngSwitchCase="'being-edited'"
+                        class="entry-meanings__meaning entry-meanings__meaning_state_being-edited">
+                        <ng-container *ngIf="getFormControlForMeaningBeingEdited(meaning) as meaningFormControl">
+                            <p class="entry-meanings__meaning-definition">
+                                <label for="definition"
+                                    class="entry-meanings__meaning-definition-label">Definition</label>
+                                <app-text-input [formControl]="meaningFormControl.controls.definition"
+                                    [maxlength]="entryMeaningsValidationValues.definitionMaxLength" [isMultiline]="true"
+                                    id="definition"></app-text-input>
+                            </p>
+                            <div class="entry-meanings__meaning-examples">
+                                <label for="examples" class="entry-meanings__meaning-examples-label">Examples</label>
+                                <ul id="examples" class="entry-meanings__meaning-example-list">
+                                    <ng-container
+                                        *ngFor="let exampleFormControl of meaningFormControl.controls.examples.controls; let exampleIndex = index;">
+                                        <li class="entry-meanings__meaning-example">
+                                            <app-text-input [formControl]="exampleFormControl"
+                                                [maxlength]="entryMeaningsValidationValues.exampleMaxLength"
+                                                [isMultiline]="true"
+                                                class="entry-meanings__entry-meaning-example-input"></app-text-input>
+                                            <app-button
+                                                (click)="deleteMeaningExampleFormControl(meaningFormControl, exampleIndex)"
+                                                [size]="'small'" title="Delete this example"
+                                                class="entry-meanings__delete-meaning-example-button">
+                                                <fa-icon [icon]="faXmarkCircle" size="sm"></fa-icon>
+                                                <span class="invisible-text">Delete This Example</span>
+                                            </app-button>
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                                <app-button (click)="addMeaningExampleFormControl(meaningFormControl)"
+                                    [disabled]="isAddMeaningExampleButtonDisabled(meaningFormControl)"
+                                    [state]="ButtonState.conspicuous" [size]="'small'"
+                                    class="entry-meanings__new-meaning-example-button">
+                                    Add an example
+                                </app-button>
+                            </div>
+                            <p class="entry-meanings__meaning-actions">
+                                <app-button (click)="acceptMeaningChanges(meaning, meaningFormControl)"
+                                    [disabled]="isAcceptMeaningChangesButtonDisabled(meaningFormControl)"
+                                    [state]="ButtonState.success" [size]="'small'">Ok</app-button>
+                                <app-button (click)="discardMeaningChanges(meaning)" [state]="ButtonState.error"
+                                    [size]="'small'">Discard</app-button>
+                            </p>
+                        </ng-container>
+                    </li>
+                    <li *ngSwitchCase="'deleted'" class="entry-meanings__meaning entry-meanings__meaning_state_deleted">
+                        <span>This meaning has been deleted</span>
+                        <div class="entry-meanings__meaning-actions">
+                            <app-button (click)="restoreMeaning(meaning)" [disabled]="isRestoreMeaningButtonDisabled"
+                                [size]="'small'">Restore</app-button>
+                        </div>
+                    </li>
+                </ng-container>
+            </ng-container>
+        </ul>
+        <p class="entry-meanings__new-meaning">
+            <app-button (click)="addMeaning()" [disabled]="isAddMeaningButtonDisabled" [state]="ButtonState.conspicuous"
+                [size]="'small'">
+                Add a definition with examples
+            </app-button>
+        </p>
+    </ng-container>
+</app-panel>
