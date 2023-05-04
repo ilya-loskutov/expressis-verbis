@@ -10,7 +10,7 @@ import { Dictionary, NullDictionary } from "../models/dictionary";
 })
 export class DictionaryFactory {
     createNewDictionary(name: string): Dictionary {
-        return new Dictionary(/*uuidv4()*/ 'EnglishEnglishEnglishEnglishEnglishE', name);
+        return new Dictionary(uuidv4(), name);
     }
 
     createNullDictionary(): Dictionary {

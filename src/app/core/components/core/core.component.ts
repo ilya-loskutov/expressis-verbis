@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { Dictionary } from 'src/app/dictionary/models/dictionary';
 import { DictionaryService } from 'src/app/dictionary/services/dictionary.service';
-import { EntryService } from 'src/app/entry/services/entry.service';
 
 @Component({
   selector: 'app-core',
@@ -14,11 +13,9 @@ export class CoreComponent implements OnInit {
   constructor(
     private dictionaryService: DictionaryService,
     private router: Router,
-    private entryService: EntryService
   ) { }
 
   ngOnInit(): void {
-    this.entryService.insertDummy();
     this.navigateOnDictionarySelected();
   }
 
