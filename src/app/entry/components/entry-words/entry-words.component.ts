@@ -74,6 +74,10 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
   newWordInputMessage$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   newWordInputState$: BehaviorSubject<TextInputState> = new BehaviorSubject<TextInputState>(TextInputState.default);
 
+  ngOnDestroy(): void {
+    this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
+  }
+
   writeValue(entryWords: string[]): void {
     this.entryWords = entryWords;
   }
@@ -155,9 +159,5 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
 
   onNewWordInputBlur(): void {
     this.markAsTouched();
-  }
-
-  ngOnDestroy(): void {
-    this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
   }
 }

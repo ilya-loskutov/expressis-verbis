@@ -45,6 +45,10 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
     });
   }
 
+  ngOnDestroy(): void {
+    this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
+  }
+
   private attemptsToSubmitInvalidFormSubscription!: Subscription;
   @Input() attemptsToSubmitInvalidForm$!: Observable<void>;
 
@@ -248,9 +252,5 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
   get isAddMeaningButtonDisabled(): boolean {
     return this.shouldAllControlsBeDisabled ||
       this.getRemainedMeanings().length === entryMeaningsValidationValues.meaningsMaxLength;
-  }
-
-  ngOnDestroy(): void {
-    this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
   }
 }
