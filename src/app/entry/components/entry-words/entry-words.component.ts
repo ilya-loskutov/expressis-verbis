@@ -35,13 +35,13 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
   ) { }
 
   ngOnInit(): void {
-    this.createnewWordInput();
+    this.createNewWordInput();
     this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
   }
 
-  private createnewWordInput(): void {
+  private createNewWordInput(): void {
     this.newWordInput = this.formBuilder.nonNullable.control<string>(
-      '', // we do not set a disabled value here as entryWords doesn't exist yet, it will set in setDisabledState()
+      '', // We do not set a disabled value here as entryWords doesn't exist yet, it will be set in setDisabledState() afterwards
       [
         onlyWhiteSpacesPreventionValidator,
         Validators.minLength(entryWordsValidationValues.wordMinLength),
