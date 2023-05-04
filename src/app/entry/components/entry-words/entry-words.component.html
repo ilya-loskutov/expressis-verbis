@@ -2,8 +2,8 @@
     <ng-container title>Related Words</ng-container>
     <ng-container body>
         <ul *ngIf="entryWords.length > 0" class="entry-words__list">
-            <li *ngFor="let word of entryWords; let index = index;" class="entry-words__list-item big-line">
-                <span class="entry-words__word">{{word}}</span>
+            <li *ngFor="let word of entryWords; let index = index;" class="entry-words__word big-line">
+                <span class="entry-words__word-itself">{{word}}</span>
                 <button (click)="deleteWord(index)" type="button"
                     [attr.disabled]="isDeleteWordButtonDisabled ? true: null" class="entry-words__delete-word-button"
                     title="Delete this word">

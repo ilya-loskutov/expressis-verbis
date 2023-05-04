@@ -8,7 +8,7 @@
         gap: var(--small-indent);
     }
 
-    &__list-item {
+    &__word {
         display: flex;
         align-items: center;
         gap: var(--small-indent);
@@ -18,7 +18,7 @@
         border: 1px solid rgb(var(--cold-color-rgb));
     }
 
-    &__word {
+    &__word-itself {
         overflow-wrap: anywhere;
 
         @supports not (overflow-wrap: anywhere) {
