@@ -10,7 +10,6 @@ import { EntryComponent } from './components/entry/entry.component';
 import { EntryListComponent } from './components/entry-list/entry-list.component';
 import { EntryDescriptionComponent } from './components/entry-description/entry-description.component';
 import { EntryWordsComponent } from './components/entry-words/entry-words.component';
-import { TemporaryEntryComponent } from './components/temporary-entry/temporary-entry.component';
 import { EntryMeaningsComponent } from './components/entry-meanings/entry-meanings.component';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { EntryMeaningsComponent } from './components/entry-meanings/entry-meanin
     EntryListComponent,
     EntryDescriptionComponent,
     EntryWordsComponent,
-    TemporaryEntryComponent,
     EntryMeaningsComponent,
   ],
   imports: [
