@@ -1,11 +1,9 @@
 <form [formGroup]="entryForm" (ngSubmit)="onFormSubmit()" class="entry">
     <input formControlName="id" type="hidden">
-    <app-entry-words formControlName="words"
-        [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$.asObservable()" id="words"
+    <app-entry-words formControlName="words" [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$" id="words"
         class="entry__words"></app-entry-words>
-    <app-entry-meanings formControlName="meanings"
-        [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$.asObservable()" id="meanings"
-        class="entry__meanings"></app-entry-meanings>
+    <app-entry-meanings formControlName="meanings" [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$"
+        id="meanings" class="entry__meanings"></app-entry-meanings>
     <input formControlName="lastUpdated" type="hidden">
     <input formControlName="dictionaryId" type="hidden">
     <div class="entry__actions">
