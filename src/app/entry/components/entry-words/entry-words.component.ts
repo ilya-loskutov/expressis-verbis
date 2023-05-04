@@ -125,7 +125,7 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     this.setDisabledValueTonewWordInput();
   }
 
-  markAsTouched(): void {
+  private markAsTouched(): void {
     if (!this.isAnyControlTouched) {
       this.isAnyControlTouched = true;
       this.onTouched();
