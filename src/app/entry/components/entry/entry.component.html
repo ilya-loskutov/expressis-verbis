@@ -1,15 +1,16 @@
-<form [formGroup]="entryForm" class="entry">
+<form [formGroup]="entryForm" (ngSubmit)="onFormSubmit()" class="entry">
     <input formControlName="id" type="hidden">
     <app-entry-words formControlName="words"
-        [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$.asObservable()"
+        [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$.asObservable()" id="words"
         class="entry__words"></app-entry-words>
     <app-entry-meanings formControlName="meanings"
-        [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$.asObservable()"
+        [attemptsToSubmitInvalidForm$]="attemptsToSubmitInvalidForm$.asObservable()" id="meanings"
         class="entry__meanings"></app-entry-meanings>
     <input formControlName="lastUpdated" type="hidden">
     <input formControlName="dictionaryId" type="hidden">
     <div class="entry__actions">
-        <app-button [type]="'submit'" [state]="ButtonState.success" class="entry__submit-form-button">
+        <app-button [type]="'submit'" [disabled]="isSubmitFormButtonDisabled" [state]="ButtonState.success"
+            class="entry__submit-form-button">
             Submit
         </app-button>
         <app-button (click)="cancelFormSubmission()" [disabled]="isCancelFormSubmissionButtonDisabled"
