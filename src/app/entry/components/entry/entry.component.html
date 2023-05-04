@@ -12,7 +12,8 @@
         <app-button [type]="'submit'" [state]="ButtonState.success" class="entry__submit-form-button">
             Submit
         </app-button>
-        <app-button [state]="ButtonState.error" class="entry__cancel-changes-button">
+        <app-button (click)="cancelFormSubmission()" [disabled]="isCancelFormSubmissionButtonDisabled"
+            [state]="ButtonState.error" class="entry__cancel-form-submission-button">
             Cancel
         </app-button>
     </div>

@@ -8,6 +8,7 @@ import { Entry } from '../../models/entry';
 import { EntryForm } from '../../models/entry-form';
 import { entryWordsValidator, entryMeaningsValidator } from '../../services/entry-form-control-validators';
 import { ButtonState } from 'src/app/shared/config/components/button';
+import { navigationPaths } from 'src/app/shared/config/navigation-paths/navigation-paths';
 
 @Component({
   selector: 'app-entry',
@@ -63,4 +64,12 @@ export class EntryComponent implements OnInit, OnDestroy {
   }
 
   attemptsToSubmitInvalidForm$: Subject<void> = new Subject<void>();
+
+  cancelFormSubmission(): void {
+    this.router.navigate([navigationPaths.entryList]);
+  }
+
+  get isCancelFormSubmissionButtonDisabled(): boolean {
+    return this.entryForm.disabled;
+  }
 }
