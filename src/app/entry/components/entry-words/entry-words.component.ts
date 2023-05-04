@@ -96,10 +96,10 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
 
   setDisabledState(isDisabled: boolean): void {
     this.shouldAllControlsBeDisabled = isDisabled;
-    this.setDisabledValueTonewWordInput();
+    this.setDisabledValueToNewWordInput();
   }
 
-  private setDisabledValueTonewWordInput(): void {
+  private setDisabledValueToNewWordInput(): void {
     if (this.shouldnewWordInputBeDisabled) {
       this.newWordInput.disable();
     }
@@ -122,7 +122,7 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     this.entryWords.splice(index, 1);
     this.onChange(this.entryWords);
     this.markAsTouched();
-    this.setDisabledValueTonewWordInput();
+    this.setDisabledValueToNewWordInput();
   }
 
   private markAsTouched(): void {
@@ -149,7 +149,7 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     if (this.entryWords.length === 1) {
       this.updateNewWordInputStatus('', TextInputState.default);
     }
-    this.setDisabledValueTonewWordInput();
+    this.setDisabledValueToNewWordInput();
   }
 
   get inNewWordButtonDisabled(): boolean {
