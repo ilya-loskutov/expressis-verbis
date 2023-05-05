@@ -24,6 +24,7 @@ export class DefaultEntryListProvider implements EntryListProvider {
     private readonly _dictionaryId: string;
 
     async list(query: EntryQuery): Promise<EntryDescription[]> {
+        this.throwIfSuchQueryIsNotImplemented(query);
         const entryCollection = await this._entryCollectionPromise;
         const loadedEntryDocumentList: RxDocument<Entry>[] = await entryCollection.find({
             selector: this.getSelectorSpecification(query),
@@ -32,16 +33,18 @@ export class DefaultEntryListProvider implements EntryListProvider {
         })
             .exec();
         if (this.isThereNeedToAddressRxDBBug(query)) {
-            /*
-            Note this approach may bring a different problem: in case of the entry whose lastUpdated value was provided with the query
-            has been removed by the time of the current request, the subsequent entry will not appear in the list
-            */
-            loadedEntryDocumentList.shift();
-        }
-        if (query.direction === 'back') {
-            loadedEntryDocumentList.reverse();
+            this.purgeEntryDocumentListOfUnneededOnesOnRxDBBug(loadedEntryDocumentList, query);
         }
         return loadedEntryDocumentList.map(this._entryFactory.mapEntryDocumentToEntryDescription);
+    }
+
+    private throwIfSuchQueryIsNotImplemented(query: EntryQuery): void {
+        /*
+        Such queries call for some extra code, so we'd rather leave them out until we actually need to support them
+        */
+        if (query.direction === 'back' && !query.startingPoint) {
+            throw new Error('Queries with the back direction and without a starting point are not implemented');
+        }
     }
 
     private getSelectorSpecification(query: EntryQuery): MangoQuerySelector {
@@ -57,7 +60,7 @@ export class DefaultEntryListProvider implements EntryListProvider {
     }
 
     private getSelectorOperator(query: EntryQuery): string {
-        let operator: string = query.direction === 'forward' ? '$gt' : '$lt';
+        let operator: string = query.direction === 'forward' ? '$lt' : '$gt';
         if (query.startingPoint!.inclusive) {
             operator += 'e';
         }
@@ -66,8 +69,8 @@ export class DefaultEntryListProvider implements EntryListProvider {
 
     private getSortSpecification(query: EntryQuery): MangoQuerySortPart[] {
         return [
-            { dictionaryId: query.direction === 'forward' ? 'asc' : 'desc' },
-            { lastUpdated: query.direction === 'forward' ? 'asc' : 'desc' }
+            { dictionaryId: 'desc' },
+            { lastUpdated: 'desc' }
         ];
     }
 
@@ -83,9 +86,18 @@ export class DefaultEntryListProvider implements EntryListProvider {
         RxDB considers the $gt and $gte operators with regard to a UTC field indiscriminately, 
         as the latter one
         */
-        return query.direction === 'forward' &&
+        return query.direction === 'back' &&
             query.startingPoint !== undefined &&
             !query.startingPoint.inclusive;
+    }
+
+    private purgeEntryDocumentListOfUnneededOnesOnRxDBBug(loadedEntryDocumentList: RxDocument<Entry>[], query: EntryQuery): void {
+        if (loadedEntryDocumentList[loadedEntryDocumentList.length - 1]?.lastUpdated === query.startingPoint!.lastUpdatedValue) {
+            loadedEntryDocumentList.splice(loadedEntryDocumentList.length - 1, 1);
+        }
+        else if (loadedEntryDocumentList.length > query.limit) {
+            loadedEntryDocumentList.splice(0, 1);
+        }
     }
 
     async count(): Promise<number> {
