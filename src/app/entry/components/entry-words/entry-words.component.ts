@@ -56,10 +56,9 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
 
   private subscribeToNotificationsOfAttemptToSubmitInvalidForm(): void {
     this.attemptsToSubmitInvalidFormSubscription = this.attemptsToSubmitInvalidForm$.subscribe(() => {
-      assert(this.entryWords.length < entryWordsValidationValues.wordsMinLength,
-        `The entry's words is of ${this.entryWords.length} length while it is expected to be of less than the min allowable value (${entryWordsValidationValues.wordsMinLength})`);
-
-      this.updateNewWordInputStatus('Please add at least one related word', TextInputState.error);
+      if (this.entryWords.length < entryWordsValidationValues.wordsMinLength) {
+        this.updateNewWordInputStatus('Please add at least one related word', TextInputState.error);
+      }
     });
   }
 
