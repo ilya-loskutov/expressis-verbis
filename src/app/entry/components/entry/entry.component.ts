@@ -72,10 +72,10 @@ export class EntryComponent implements OnInit, OnDestroy {
 
   private onInvalidFormSubmit(): void {
     this.attemptsToSubmitInvalidForm$.next();
-    if (this.entryForm.errors!['entryWordsLengthLessThanAllowableValueError']) {
+    if (this.entryForm.controls.words.errors?.['entryWordsLengthLessThanAllowableValueError']) {
       this.scrollTo('words');
     }
-    else if (this.entryForm.errors!['someMeaningsAreBeingEdited']) {
+    else if (this.entryForm.controls.meanings.errors?.['someMeaningsAreBeingEdited']) {
       this.scrollTo('meanings');
     }
     else {
