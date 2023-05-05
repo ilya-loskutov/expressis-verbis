@@ -7,15 +7,14 @@ import { assert } from "src/app/shared/utils/assert/assert";
 export function entryWordsValidator(control: AbstractControl): ValidationErrors | null {
     assert(Array.isArray(control.value), `An array value was expected for validation`);
 
+    /* 
+    We validate only this error as assume the entry words component does not allow pass 
+    all other possible types of errors
+    */
     const entryWords: string[] = control.value;
     if (entryWords.length < entryWordsValidationValues.wordsMinLength) {
         return {
             entryWordsLengthLessThanAllowableValueError: true
-        };
-    }
-    if (entryWords.length > entryWordsValidationValues.wordsMaxLength) {
-        return {
-            entryWordsLengthMoreThanAllowableValueError: true
         };
     }
     return null;

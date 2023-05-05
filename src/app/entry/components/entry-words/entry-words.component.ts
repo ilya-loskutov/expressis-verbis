@@ -146,10 +146,14 @@ export class EntryWordsComponent implements OnInit, OnDestroy, ControlValueAcces
     this.entryWords.push(this.newWordInput.value.trim());
     this.onChange(this.entryWords);
     this.newWordInput.reset();
+    this.hideEntryWordsLengthLessThanAllowableValueError();
+    this.setDisabledValueToNewWordInput();
+  }
+
+  private hideEntryWordsLengthLessThanAllowableValueError(): void {
     if (this.entryWords.length === 1) {
       this.updateNewWordInputStatus('', TextInputState.default);
     }
-    this.setDisabledValueToNewWordInput();
   }
 
   get inNewWordButtonDisabled(): boolean {
