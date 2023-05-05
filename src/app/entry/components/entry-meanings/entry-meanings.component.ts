@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 
-import { Subscription, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Meaning } from '../../models/entry';
@@ -24,7 +24,7 @@ import { assert } from 'src/app/shared/utils/assert/assert';
     }
   ]
 })
-export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAccessor {
+export class EntryMeaningsComponent implements OnInit, ControlValueAccessor {
   ButtonState = ButtonState;
 
   faXmarkCircle = faXmarkCircle;
@@ -37,20 +37,29 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToNotificationsOfAttemptToSubmitInvalidForm();
+    this.addressAttemptsToSubmitInvalidForm();
   }
 
-  private subscribeToNotificationsOfAttemptToSubmitInvalidForm(): void {
-    this.attemptsToSubmitInvalidFormSubscription = this.attemptsToSubmitInvalidForm$.subscribe(() => {
-    });
+  private addressAttemptsToSubmitInvalidForm(): void {
+    this.showSomeMeaningsBeingEditedError$ = this.attemptsToSubmitInvalidForm$.pipe(
+      map((_) => {
+        if (this.areThereMeaningsBeingEdited) {
+          return true;
+        }
+        return false;
+      })
+    );
   }
 
-  ngOnDestroy(): void {
-    this.attemptsToSubmitInvalidFormSubscription.unsubscribe();
-  }
+  showSomeMeaningsBeingEditedError$!: Observable<boolean>;
 
-  private attemptsToSubmitInvalidFormSubscription!: Subscription;
   @Input() attemptsToSubmitInvalidForm$!: Observable<void>;
+
+  get areThereMeaningsBeingEdited(): boolean {
+    return this.meaningsBeingEdited.size > 0;
+  }
+
+  private meaningsBeingEdited: Map<Meaning, EntryMeaningFormControl> = new Map<Meaning, EntryMeaningFormControl>();
 
   writeValue(entryMeanings: Meaning[]): void {
     this.entryMeanings = entryMeanings;
@@ -86,8 +95,6 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
     return 'view';
   }
 
-  private meaningsBeingEdited: Map<Meaning, EntryMeaningFormControl> = new Map<Meaning, EntryMeaningFormControl>();
-
   private deletedMeanings: Set<Meaning> = new Set<Meaning>();
 
   editMeaning(meaning: Meaning): void {
@@ -98,6 +105,17 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
 
     this.meaningsBeingEdited.set(meaning, this.createMeaningFormControl(meaning));
     this.markAsTouched();
+    this.notifyOfChanges();
+  }
+
+  private notifyOfChanges(): void {
+    this.onChange(this.getRemainedMeanings());
+  }
+
+  private getRemainedMeanings(): Meaning[] {
+    return this.entryMeanings.filter(
+      (meaning: Meaning) => !this.deletedMeanings.has(meaning)
+    );
   }
 
   private createMeaningFormControl(meaning: Meaning): EntryMeaningFormControl {
@@ -153,16 +171,6 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
     this.deletedMeanings.add(meaning);
     this.markAsTouched();
     this.notifyOfChanges();
-  }
-
-  private notifyOfChanges(): void {
-    this.onChange(this.getRemainedMeanings());
-  }
-
-  private getRemainedMeanings(): Meaning[] {
-    return this.entryMeanings.filter(
-      (meaning: Meaning) => !this.deletedMeanings.has(meaning)
-    );
   }
 
   get isDeleteMeaningButtonDisabled(): boolean {
@@ -247,6 +255,7 @@ export class EntryMeaningsComponent implements OnInit, OnDestroy, ControlValueAc
     const newMeaning = this.entryFactory.createMeaning();
     this.entryMeanings.push(newMeaning);
     this.editMeaning(newMeaning);
+    this.notifyOfChanges();
   }
 
   get isAddMeaningButtonDisabled(): boolean {

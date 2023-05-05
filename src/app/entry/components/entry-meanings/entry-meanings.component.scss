@@ -1,6 +1,12 @@
 .entry-meanings {
     $entry-meanings: &;
 
+    &__some-meanings-being-edited-error {
+        margin-bottom: var(--medium-indent);
+
+        color: rgb(var(--error-color-rgb));
+    }
+
     &__list {
         display: flex;
         flex-direction: column;

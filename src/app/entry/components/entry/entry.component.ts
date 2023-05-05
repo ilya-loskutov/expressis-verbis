@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 
@@ -7,7 +7,8 @@ import { map, Subscription, Subject } from 'rxjs';
 import { Entry } from '../../models/entry';
 import { EntryService } from '../../services/entry.service';
 import { EntryForm } from '../../models/entry-form';
-import { entryWordsValidator, entryMeaningsValidator } from '../../services/entry-form-control-validators';
+import { EntryMeaningsComponent } from '../entry-meanings/entry-meanings.component';
+import { entryWordsValidator, getEntryMeaningsValidator } from '../../services/entry-form-control-validators';
 import { ButtonState } from 'src/app/shared/config/components/button';
 import { navigationPaths } from 'src/app/shared/config/navigation-paths/navigation-paths';
 
@@ -48,7 +49,7 @@ export class EntryComponent implements OnInit, OnDestroy {
       ],
       meanings: [
         entry.meanings,
-        [entryMeaningsValidator]
+        [getEntryMeaningsValidator(this.entryMeaningsComponent)]
       ],
       lastUpdated: [entry.lastUpdated],
       dictionaryId: [entry.dictionaryId]
@@ -56,6 +57,9 @@ export class EntryComponent implements OnInit, OnDestroy {
   }
 
   entryForm!: EntryForm;
+
+  @ViewChild(EntryMeaningsComponent, { static: true })
+  private entryMeaningsComponent!: EntryMeaningsComponent;
 
   ngOnDestroy(): void {
     this.entrySubscription.unsubscribe();
@@ -75,7 +79,7 @@ export class EntryComponent implements OnInit, OnDestroy {
     if (this.entryForm.controls.words.errors?.['entryWordsLengthLessThanAllowableValueError']) {
       this.scrollTo('words');
     }
-    else if (this.entryForm.controls.meanings.errors?.['someMeaningsAreBeingEdited']) {
+    else if (this.entryForm.controls.meanings.errors?.['someMeaningsBeingEditedError']) {
       this.scrollTo('meanings');
     }
     else {

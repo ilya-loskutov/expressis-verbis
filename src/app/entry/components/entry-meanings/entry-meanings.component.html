@@ -1,6 +1,9 @@
 <app-panel class="entry-meanings">
     <ng-container title>Definitions & Examples</ng-container>
     <ng-container body>
+        <div *ngIf="showSomeMeaningsBeingEditedError$ | async" class="entry-meanings__some-meanings-being-edited-error">
+            You have uncompleted edits. It is a good idea to do away with them before saving the changes.
+        </div>
         <ul *ngIf="entryMeanings.length > 0" class="entry-meanings__list">
             <ng-container *ngFor="let meaning of entryMeanings">
                 <ng-container [ngSwitch]="getMeaningState(meaning)">
